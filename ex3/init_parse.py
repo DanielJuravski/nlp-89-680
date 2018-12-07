@@ -132,6 +132,10 @@ def window_parse(input_data, output_file):
                     line_words = set()
 
 
+def dependency_parse(input_data, output_file):
+    pass
+
+
 if __name__ == '__main__':
     parse_type = sys.argv[1]
     input_data = sys.argv[2]
@@ -143,6 +147,8 @@ if __name__ == '__main__':
         all_sentence_parse(input_data, output_file)
     elif parse_type == 'window':
         window_parse(input_data, output_file)
+    elif parse_type == 'dep':
+        dependency_parse(input_data, output_file)
 
     with open(output_words_file, "w") as f:
         for w in word_counts:

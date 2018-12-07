@@ -2,5 +2,5 @@
 *.iml
 *.pyc
 *.class
-*.jar
+#*.jar
 data/
