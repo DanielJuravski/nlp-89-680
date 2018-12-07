@@ -1,0 +1,5 @@
+(ROOT (S (NP (NOUN (Det a) (Nn desk))) (VP (Vbzl is) (Vbg eating) (NP (NP (NOUN (Det every) (Nn pickle))) (PP (Prep in) (NP (NOUN (Det every) (Nn (Adj fine) (Nn pickle)))))))) !)
+(ROOT (S (NP (NOUN (Det every) (Nn president))) (VP (Vbzl is) (NP (NOUN (Nnp John))))) !)
+(ROOT is it true that (S (NP (NOUN (Det a) (Nn pickle))) (VP (Vbzl is) (NP (NP (NOUN (Nnp John))) (PP (Prep under) (NP (NOUN (Nnp Sally))))))) ?)
+(ROOT (S (NP (NOUN (Det every) (Nn sandwich))) (VP (Vbzl is) (PP (Prep in) (NP (NOUN (NOUN (Nnp Sally)) (Cc and) (NOUN (Nnp John))))))) !)
+(ROOT (S (NP (NOUN (Det a) (Nn chief of staff))) (VP (Vbzl is) (Vbg eating))) !)

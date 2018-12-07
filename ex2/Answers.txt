@@ -1,0 +1,148 @@
+NLP - Assignment 2 -- Grammar Writing
+
+Daniel Juravski 206082323
+Eyal Orbach 015369317
+
+
+Part 1:
+
+a) 
+There are rules that cause recursive generation, such as:
+NP NP PP
+PP Prep NP
+Those rules have their own LHS symbols on their RHS.
+Incrementing the weights of rules with those LHS that have non recursive symbols on the RHS will lower the recursion.
+If the sum weights of recursive rules is larger than non recursive rules for a LHS than it will likeley reach a loop that
+will reach the stack's limit therefore those weights should be balanced to  lean towards non-recursive rules
+
+
+b)
+The rule that allows that kind of sentences is 'Noun Adj Noun' and this can happen recursivley (in other words allow multiple adjectives).
+But that LHS (Noun) has 5 terminal state rules with weight 1 each, thus the prob to pick the recursive  rule is just 1/6.
+For raising the adjectives number we just need to increase that rule's weight.
+
+c)
+These are the rules for NP:
+1 NP Det Noun
+1 NP NP PP
+The first rule results in 2 preterminals, which will be replaced with terminals, therefore incrementing its weight will result in shorter sentences.
+
+To increment the usage of adjectives, we will increment the weight for the below rule:
+1 Noun Adj Noun
+Thus incrementing the chances of a Noun being prefixed with an adjective instead of being replaced with a terminal state.
+
+d)
+All non-terminal states except 'NP' and 'Noun' and ROOT have exactly one state to be replaced with,
+hence there is no meaning for their weight, because the propability to choose them is 100%.
+Changin the weights in ROOT is not significant since all options are natural
+Changing the weights on terminal states can make sentances sound more natural on a semantic level
+For example: we decreased weights of some Verbs and Adj, since they can refer to less nouns (just a little semantic issue).
+
+
+
+
+
+
+
+
+
+Part 2:
+
+We added/modified rules to produce a sentence similar to the ones given, got insights on it and adjusted it to integrate with the other
+rules.
+Below is the modifications required for each sentence
+
+a) We made Noun a non-terminal state (NOUN), and introduced Nnp (proper noun, Sally) and Nn (singular noun, president). NP can now transition into Det Nn or Nnp ot NP PP
+
+b) We introduced Cc a pre-terminal state (and,or) along with rules that utilize it on NP and VP and Verb
+
+c) We replaced Verb with Vi (intransitive verb) and Vt (transitive verb)
+
+d) We introduced V5 a pre-terminal verb relating to a sub-sentance. VP can now be replaced by V5 SBAR
+ We introduced SBAR as Comp S, where Comp is a preterminal to a relational word (that)
+
+e) We introduced Prp (personal pronoun) and It can only be placed to the left of a VP
+   We introduced V6, verbs that follow a Prp and are followed by NP SBAR where that NP is the subject
+   This is different than v5 verbs that are active and therefore the subject NP is to the left of the verb
+   "It perplexed Sally that..." compared to "Sally thought that"
+   We decided these verbs should not be used in an active form like "Sally perplexed the sandwich" though this is debatable
+
+
+
+f) We added Rb (adverb, 'very') and a rule to replace somtimes an adjective with a 'adverb and adjective', the adjective can be replaced again many times (very very pickled)
+
+g) We added 2 things to deal with similar sentences
+   1- a transition VP -> VP PP. any verb can happen 'on the floor'
+   2- Vprep -> special verbs that must be followed by a PP. "worked the proposal" is wrong while "worked on the proposal" is correct
+   nouns as before can also be followed by PP
+
+h) We added the lazy adjective, and introduced a verb phrase "Vbzl".
+   a preterminal present 3rd person linking verb ('is' being the 3rd person present form of 'be'.
+   be is a linking verb that needs to be followed an adjective for now)
+   this introduced an unnatural phenomena that we decided was grammatical.
+   the 'is adjective' form can sometimes be followed by a PP that sounds wrong
+   "every sandwich is delicious with a sandwich" but since "a sandwich is delicious with a pickle" is correct we left is as so.
+
+i) We introduced Vbg, a pre-terminal present particle (eating) and now Vbzl can also be followed by Vbg (is eating) or Vbg NP (is eating the sandwich).
+
+j) Vbzl is now also followed by a PP or a NP
+   "Sally is in the sandwich " and  "Sally is a sandwich" respectively
+
+The problem of handling (b) and (h)/(i):
+Issue 1 example: `Sally wanted and is eating a sandwich`
+We solved that by not introducing the combination VP NP, but rather adding NP after only specific form verbs therefore we would generate.
+Issue 2 example: `Sally wanted a sandwich and is eating a pickle` which is good.
+issue 3 example: `Sally sighed and is eating a sandwich` is un natural because of the time mixtures (and is now eating... will be more natural) though gramaticly that is ok.
+
+
+
+
+
+
+
+
+Part 3:
+
+(a) "a" vs. "an" problem:
+adding nouns:
+    Nnv = Nn (Singular noun) with prefix of vowels
+    Splited Det to: Deta={'a'}, Detan={'an'} and the rest in Det.
+adding adjectives:
+    Nnv can be Adj Nnv
+    a) 'it is eating a delicious apple'
+    b) 'it is eating an excellent apple'
+    the 'a'/'an' should be determined only by the word following following the determiner, here the adjective.
+    Adjv = Adj with prefix of vowels
+adding advers:
+    Rb splited to Rb and Rbv.
+    The 'a' , 'an' could be followd by it too.
+    a) 'it is eating a very delicious apple'
+    b) 'it is eating an extremely delicious apple'
+
+    Then we created NNAPRE (Nn that has 'a' prefix) and NNANPRE (Nn that has 'an' prefix)
+    Det works with both of them without any limitations.
+    About the Deta and Detan, we had to insure that the following symbol must have a matching symbol.
+    Thus, we created these 2 nonterminals NNAPRE and NNANPRE that their prefix are as follows:
+    NNAPRE starts with Nn or Adj
+    NNANPRE starts with Nnv or Adjv
+    Then we just did all the possible combinations of the adjectives, adverbs and nouns.
+output:
+'it is eating an extremely fine sandwich !'
+'is it true that Sally wanted a very perplexed eagle ?'
+
+
+
+(c) Relative clauses:
+A noun phrase can be replaced by a noun phrase 'that' something.
+Detailed explanation:
+NP can transition to NP REL.
+REL is a non terminate state that is replaced by Comp RSV (Relative Statement verb) or Comp RSNV (Relative statement noun verb).
+RSV is a non terminate state that is replaced by a Verb phase, therefore referring to the initial noun as the subject.
+these can be any verb phrase Intransitive/Transitive/Ditransitive
+(Sally kissed the president that sighed)
+(Sally kissed the president that ate the pickle )
+(Sally kissed the president that thought that Sally ate the pickle )
+
+RSNV is replaced by a noun phrase (the subject) and a verb that is either Transitive or Ditransitive, where the initial noun is the direct or indirect object respectively.
+(Sally kissed the pickle that the president ate)
+(Sally kissed the pickle that Sally thought that the president ate)
