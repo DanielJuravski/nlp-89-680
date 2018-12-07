@@ -1,256 +1,136 @@
-+-----------+--------------------+--------------------------+
-| word\type |   bow5-contexts    |       dep-contexts       |
-+-----------+--------------------+--------------------------+
-|    ---    |        ---         |           ---            |
-|    car    |        car         |    adpmod:byI_commute    |
-|           |       racing       |    amod_street-legal     |
-|           |       mygale       |     conj_hovercraft      |
-|           |        bmw         |   amod_newly-designed    |
-|           |       driver       |        amod_liter        |
-|           |       motor        |     amod_late-model      |
-|           |        cars        |        poss_brink        |
-|           |     dealership     |      compmod_m1918       |
-|           |       parked       |   adpmod:fromI_tossed    |
-|           |     rear-drive     |    compmod_high-wing     |
-|           |      accident      |       poss_waltrip       |
-|           |    mid-engined     |    adpmod:byI_escapes    |
-|           |    dealerships     |    amod_requisitioned    |
-|           |      touring       |    compmodI_rallying     |
-|           |       champ        |      nsubjI_drivers      |
-|           |        race        |      compmod_rigid       |
-|           |       toyota       |  adpmod:insideI_placing  |
-|           |       rental       |      compmod_hilux       |
-|           |        suv         |       apposI_bike        |
-|           |       truck        |        poss_matty        |
-|    ---    |        ---         |           ---            |
-|    bus    |        bus         |    adpmod:byI_commute    |
-|           |       buses        |     amod_east-bound      |
-|           |       ksrtc        |     conj_hovercraft      |
-|           |      samtrans      |   adpmod:onI_ridership   |
-|           |       seabus       |     compmod_airlink      |
-|           |        smrt        |     compmod_operates     |
-|           |     connexxion     |       conj_busses        |
-|           |     inter-city     |       compmod_xpt        |
-|           |     intercity      |       compmod_yrt        |
-|           |       msrtc        |      dobjI_onboard       |
-|           |      transit       |       amod_20-bit        |
-|           |   double-decker    |     compmod_citybus      |
-|           |        tram        |    amod_requisitioned    |
-|           |      commuter      |  adpmod:between_belfast  |
-|           |       apsrtc       |    amod_street-legal     |
-|           |      services      |       compmod_n11        |
-|           |       routes       |     compmodI_hookups     |
-|           |      hiroden       |   amod_newly-designed    |
-|           |      metrobus      |   adpmod:like_express    |
-|           |        kmb         |       compmod_weka       |
-|    ---    |        ---         |           ---            |
-|  hospital |      hospital      |     compmod_siriraj      |
-|           |      bethlem       |    compmod_safdarjung    |
-|           |     moorfields     |     adpmod:of_nuova      |
-|           |    psychiatric     |   compmod_strangeways    |
-|           |     hospitals      |  amod_maximum-security   |
-|           |     infirmary      |      compmod_armley      |
-|           |     foundling      |    compmod_combermere    |
-|           |      siriraj       |     compmod_fresnes      |
-|           |      maudsley      |     compmod_eastview     |
-|           |      westmead      |     compmod_desloge      |
-|           |      bellevue      |    compmod_monklands     |
-|           |    convalescent    |      compmod_nudgee      |
-|           |     polyclinic     |    compmod_longmeadow    |
-|           |     maternity      |     compmod_edgemont     |
-|           |     sunnybrook     |    compmod_southridge    |
-|           |       soroka       |     compmod_archbold     |
-|           |       clinic       |    compmod_shinagawa     |
-|           |       mulago       |      compmod_eppley      |
-|           |     in-patient     |     compmod_nantong      |
-|           |     dispensary     |   compmod_ravenscourt    |
-|    ---    |        ---         |           ---            |
-|   hotel   |       hotel        |   compmod_nymphenburg    |
-|           |       hotels       |    compmod_dolmabahçe    |
-|           |       westin       |     compmod_whitwell     |
-|           |      radisson      |     conj_guesthouses     |
-|           |     kempinski      |   compmod_ravenscourt    |
-|           |      sofitel       |     compmod_hanworth     |
-|           |       ramada       |     compmod_siriraj      |
-|           |      biltmore      |   compmod_strangeways    |
-|           |    ritz-carlton    |    compmod_safdarjung    |
-|           |      sheraton      |      compmod_armley      |
-|           |      marriott      |  adpmod:onI_renovations  |
-|           |  waldorf-astoria   |     compmod_manresa      |
-|           |     five-star      |      rcmod_renting       |
-|           |       5-star       |   compmod_portchester    |
-|           |       crowne       |     compmod_eastview     |
-|           |     doubletree     |    compmod_combermere    |
-|           |     restaurant     |   adpmod:nearI_parked    |
-|           |       hyatt        |     compmod_kirkdale     |
-|           |       hilton       |     compmod_edgemont     |
-|           |       luxury       |    compmod_blackness     |
-|    ---    |        ---         |           ---            |
-|    gun    |        gun         |         num_88mm         |
-|           |        guns        |   adpmod:withI_rearmed   |
-|           |     submachine     |      compmod_m1918       |
-|           |      machine       |    compmodI_fellatio     |
-|           |      gatling       |         num_60mm         |
-|           |    sub-machine     |     adpmod:ofI_hilt      |
-|           |      howitzer      |    compmod_karabiner     |
-|           |       rifle        |       compmod_t-55       |
-|           |        40mm        |  adpmod:forI_cartridges  |
-|           |      11-inch       |       compmodI_cwt       |
-|           |    emplacements    |     compmod_varmint      |
-|           |   muzzle-loading   |   amod_newly-designed    |
-|           |        20mm        |       conjI_turban       |
-|           |        75mm        |      rcmod_crushes       |
-|           |     smoothbore     |    adpmod:fromI_bled     |
-|           |      turrets       |   amod_point-and-shoot   |
-|           |     recoilless     |       compmod_mlrs       |
-|           |       5-inch       |       compmod_bvr        |
-|           |       turret       |     compmodI_set-ups     |
-|           |   breech-loading   |   adpmod:withI_pistol    |
-|    ---    |        ---         |           ---            |
-|    bomb   |        bomb        |         num_88mm         |
-|           |       bombs        |    adpmod:on_pentagon    |
-|           |     detonated      |    compmodI_splashes     |
-|           |     detonates      |   adpmod:byI_unharmed    |
-|           |      detonate      |   adpmod:withI_rearmed   |
-|           |       atomic       |    compmod_single-car    |
-|           |      exploded      |      compmod_m1918       |
-|           |     detonating     |     compmod_phishing     |
-|           |       bomber       |    compmodI_fellatio     |
-|           |      bombing       |       rcmod_bursts       |
-|           |       blast        |   compmod_decapitation   |
-|           |      bombings      |    adpmod:over_berlin    |
-|           |     booby-trap     |         num_60mm         |
-|           |      landmine      |       compmod_nega       |
-|           |        v-1         |      rcmod_crushes       |
-|           |     hiroshima      |     adpmod:at_wonsan     |
-|           |      nuclear       |      conjI_hellcat       |
-|           |    laser-guided    |       compmod_bvr        |
-|           |      explodes      |    compmod_econoline     |
-|           |       blasts       |       compmod_t-55       |
-|    ---    |        ---         |           ---            |
-|   horse   |       horse        |       amod_gaited        |
-|           |       horses       |    nsubjpassI_spooked    |
-|           |    standardbred    |     compmodI_drovers     |
-|           |    thoroughbred    |        dobjI_shoe        |
-|           |      trotting      |    adpmod:byI_commute    |
-|           |       riding       |       rcmod_roams        |
-|           |       racing       |       poss_quixote       |
-|           |       ridden       |      compmod_ch-53e      |
-|           |     galloping      |        appos_pony        |
-|           |        bred        |     compmod_poitevin     |
-|           |      gelding       |     adpmod:ofI_hilt      |
-|           |        stud        |    adpmod:byI_escapes    |
-|           |     appaloosa      |     compmodI_fillet      |
-|           |       pommel       |     compmodI_cogburn     |
-|           |      bareback      |    compmod_beardless     |
-|           |       bronc        |       apposI_bike        |
-|           |       sired        |      compmod_m1918       |
-|           |   thoroughbreds    |      poss_quagmire       |
-|           |      friesian      |       conjI_turban       |
-|           |      stables       |     adpmod:byI_foot      |
-|    ---    |        ---         |           ---            |
-|    fox    |        fox         |     amod_crab-eating     |
-|           |       vulpes       |     appos_canadensis     |
-|           |        news        |   compmodI_subchannels   |
-|           |     movietone      |       conj_mattel        |
-|           | owned-and-operated |      compmod_jacki       |
-|           |        nbc         |       conjI_raimi        |
-|           |        cbs         |       conjI_corgan       |
-|           |      terrier       |        conjI_leda        |
-|           |     affiliate      |      conj_bluebird       |
-|           |        cnn         |        conj_nolte        |
-|           |       msnbc        |      conjI_browder       |
-|           |        abc         |       conj_keeler        |
-|           |        espn        |      conjI_steinem       |
-|           |    mynetworktv     |      conjI_thurmond      |
-|           |    nine-tailed     |       conjI_melly        |
-|           |         wb         |       conjI_seaver       |
-|           |      wish-tv       |     compmodI_e-type      |
-|           |      wtae-tv       |       apposI_msnbc       |
-|           |      blitzer       |       conjI_devitt       |
-|           |       marten       |       conj_o'hare        |
-|    ---    |        ---         |           ---            |
-|   table   |       table        |     adpmod:inI_rows      |
-|           |      sortable      |    adpmod:offI_knocks    |
-|           |       tables       |    adpmod:onI_seventh    |
-|           |       tennis       |      amod_ten-foot       |
-|           |       lookup       |      compmod_abydos      |
-|           |     billiards      |      amod_25-metre       |
-|           |      foosball      |    adpmod:intoI_face     |
-|           |      periodic      |   adpmod:belowI_added    |
-|           |      billiard      |  adpmod:throughI_throw   |
-|           |        toc         |   compmod_three-judge    |
-|           |      look-up       |  adpmod:ontoI_projects   |
-|           |        hash        |  adpmod:aroundI_looked   |
-|           |    collapsible     |   adpmod:onI_substance   |
-|           |      snooker       |    adpmod:onI_slides     |
-|           |       below        |       amod_rooftop       |
-|           |       round        |  adpmod:insideI_placing  |
-|           |       carom        |  adpmod:withinI_display  |
-|           |      contents      |   adpmod:onI_entities    |
-|           |      tabular       |       dobjI_clogs        |
-|           |       bottom       |    adpmod:aboveI_from    |
-|    ---    |        ---         |           ---            |
-|    bowl   |        bowl        |  adpmod:against_auburn   |
-|           |        xli         |     conjI_preseason      |
-|           |       bowls        | adpmod:against_oklahoma  |
-|           |        xliv        |      adpmod:inI_2-1      |
-|           |      xxxviii       |      conj_play-offs      |
-|           |       xliii        |   compmod_pan-pacific    |
-|           |        xlii        |   adpmod:forI_stadiums   |
-|           |        xlvi        |   adpmod:atI_clinched    |
-|           |        xlv         |     adpmod:intoI_win     |
-|           |       super        |      amod_25-metre       |
-|           |       xxxix        |     conjI_regionals      |
-|           |        xxxv        |      amod_sm-liiga       |
-|           |        xxxi        | adpmod:against_brentford |
-|           |       xxxvii       |    adpmod:ofI_tackle     |
-|           |       xxxvi        |       poss_postman       |
-|           |       xlvii        |   adpmod:inI_semifinal   |
-|           |       xxxiii       |  adpmod:against_walsall  |
-|           |        xxv         |    adpmod:atI_pitcher    |
-|           |       xxvii        |     compmod_doomben      |
-|           |       xxviii       |      compmod_deuces      |
-|    ---    |        ---         |           ---            |
-|   guitar  |       guitar       |       conjI_bongos       |
-|           |        bass        |      amod_end-blown      |
-|           |      guitars       |       conj_back-up       |
-|           |       drums        |    adpmod:onI_harris     |
-|           |     keyboards      |    adpmod:forI_adagio    |
-|           |    nyckelharpa     |   adpmod:onI_thompson    |
-|           |    glockenspiel    |      appos_mandolin      |
-|           |      6-string      |       dep_keyboard       |
-|           |     tambourine     |   adpmod:ofI_virtuoso    |
-|           |       banjo        |    adpmod:onI_foster     |
-|           |       vocals       |       amod_necked        |
-|           |     harmonica      |      conjI_flinders      |
-|           |      fretless      | adpmod:onI_supplemented  |
-|           |      ukulele       |      possI_pickups       |
-|           |     12-string      |        amod_banjo        |
-|           |      benmont       |     compmod_sandberg     |
-|           |     six-string     |  adpmod:ofI_sweethearts  |
-|           |       riffs        |       poss_diddley       |
-|           |       piano        |       depI_trumpet       |
-|           |     accordion      |    adpmod:onI_pianist    |
-|    ---    |        ---         |           ---            |
-|   piano   |       piano        |    adpmod:forI_adagio    |
-|           |       violin       |      amod_end-blown      |
-|           |       sonata       |       conjI_bongos       |
-|           |       cello        |    adpmod:onI_harris     |
-|           |      concerto      |   adpmod:ofI_virtuoso    |
-|           |         op         |   adpmod:onI_thompson    |
-|           |    harpsichord     |       conj_back-up       |
-|           |     concertos      |     compmod_kreutzer     |
-|           |       viola        |   compmod_vomeronasal    |
-|           |    violoncello     | adpmod:onI_supplemented  |
-|           |      sonatas       |      appos_mandolin      |
-|           |    divertimento    |      apposI_prelude      |
-|           |     pianoforte     |    adpmod:onI_foster     |
-|           |       e-flat       |     compmod_akiyoshi     |
-|           |      concerti      |       dep_keyboard       |
-|           |    concertante     |     compmod_sandberg     |
-|           |      clarinet      |       conjI_kabuki       |
-|           |      sonatina      |       amod_necked        |
-|           |      bassoon       |      dobjI_syncing       |
-|           |    nyckelharpa     |       depI_trumpet       |
-+-----------+--------------------+--------------------------+
++-----------+--------------------+-------------------------+
+| word\type |   bow5-contexts    |       dep-contexts      |
++-----------+--------------------+-------------------------+
+|    ---    |        ---         |           ---           |
+|    car    |        car         |    adpmod:byI_commute   |
+|           |       racing       |    amod_street-legal    |
+|           |       mygale       |     conj_hovercraft     |
+|           |        bmw         |   amod_newly-designed   |
+|           |       driver       |        amod_liter       |
+|           |       motor        |     amod_late-model     |
+|           |        cars        |        poss_brink       |
+|           |     dealership     |      compmod_m1918      |
+|           |       parked       |   adpmod:fromI_tossed   |
+|           |     rear-drive     |    compmod_high-wing    |
+|    ---    |        ---         |           ---           |
+|    bus    |        bus         |    adpmod:byI_commute   |
+|           |       buses        |     amod_east-bound     |
+|           |       ksrtc        |     conj_hovercraft     |
+|           |      samtrans      |   adpmod:onI_ridership  |
+|           |       seabus       |     compmod_airlink     |
+|           |        smrt        |     compmod_operates    |
+|           |     connexxion     |       conj_busses       |
+|           |     inter-city     |       compmod_xpt       |
+|           |     intercity      |       compmod_yrt       |
+|           |       msrtc        |      dobjI_onboard      |
+|    ---    |        ---         |           ---           |
+|  hospital |      hospital      |     compmod_siriraj     |
+|           |      bethlem       |    compmod_safdarjung   |
+|           |     moorfields     |     adpmod:of_nuova     |
+|           |    psychiatric     |   compmod_strangeways   |
+|           |     hospitals      |  amod_maximum-security  |
+|           |     infirmary      |      compmod_armley     |
+|           |     foundling      |    compmod_combermere   |
+|           |      siriraj       |     compmod_fresnes     |
+|           |      maudsley      |     compmod_eastview    |
+|           |      westmead      |     compmod_desloge     |
+|    ---    |        ---         |           ---           |
+|   hotel   |       hotel        |   compmod_nymphenburg   |
+|           |       hotels       |    compmod_dolmabahçe   |
+|           |       westin       |     compmod_whitwell    |
+|           |      radisson      |     conj_guesthouses    |
+|           |     kempinski      |   compmod_ravenscourt   |
+|           |      sofitel       |     compmod_hanworth    |
+|           |       ramada       |     compmod_siriraj     |
+|           |      biltmore      |   compmod_strangeways   |
+|           |    ritz-carlton    |    compmod_safdarjung   |
+|           |      sheraton      |      compmod_armley     |
+|    ---    |        ---         |           ---           |
+|    gun    |        gun         |         num_88mm        |
+|           |        guns        |   adpmod:withI_rearmed  |
+|           |     submachine     |      compmod_m1918      |
+|           |      machine       |    compmodI_fellatio    |
+|           |      gatling       |         num_60mm        |
+|           |    sub-machine     |     adpmod:ofI_hilt     |
+|           |      howitzer      |    compmod_karabiner    |
+|           |       rifle        |       compmod_t-55      |
+|           |        40mm        |  adpmod:forI_cartridges |
+|           |      11-inch       |       compmodI_cwt      |
+|    ---    |        ---         |           ---           |
+|    bomb   |        bomb        |         num_88mm        |
+|           |       bombs        |    adpmod:on_pentagon   |
+|           |     detonated      |    compmodI_splashes    |
+|           |     detonates      |   adpmod:byI_unharmed   |
+|           |      detonate      |   adpmod:withI_rearmed  |
+|           |       atomic       |    compmod_single-car   |
+|           |      exploded      |      compmod_m1918      |
+|           |     detonating     |     compmod_phishing    |
+|           |       bomber       |    compmodI_fellatio    |
+|           |      bombing       |       rcmod_bursts      |
+|    ---    |        ---         |           ---           |
+|   horse   |       horse        |       amod_gaited       |
+|           |       horses       |    nsubjpassI_spooked   |
+|           |    standardbred    |     compmodI_drovers    |
+|           |    thoroughbred    |        dobjI_shoe       |
+|           |      trotting      |    adpmod:byI_commute   |
+|           |       riding       |       rcmod_roams       |
+|           |       racing       |       poss_quixote      |
+|           |       ridden       |      compmod_ch-53e     |
+|           |     galloping      |        appos_pony       |
+|           |        bred        |     compmod_poitevin    |
+|    ---    |        ---         |           ---           |
+|    fox    |        fox         |     amod_crab-eating    |
+|           |       vulpes       |     appos_canadensis    |
+|           |        news        |   compmodI_subchannels  |
+|           |     movietone      |       conj_mattel       |
+|           | owned-and-operated |      compmod_jacki      |
+|           |        nbc         |       conjI_raimi       |
+|           |        cbs         |       conjI_corgan      |
+|           |      terrier       |        conjI_leda       |
+|           |     affiliate      |      conj_bluebird      |
+|           |        cnn         |        conj_nolte       |
+|    ---    |        ---         |           ---           |
+|   table   |       table        |     adpmod:inI_rows     |
+|           |      sortable      |    adpmod:offI_knocks   |
+|           |       tables       |    adpmod:onI_seventh   |
+|           |       tennis       |      amod_ten-foot      |
+|           |       lookup       |      compmod_abydos     |
+|           |     billiards      |      amod_25-metre      |
+|           |      foosball      |    adpmod:intoI_face    |
+|           |      periodic      |   adpmod:belowI_added   |
+|           |      billiard      |  adpmod:throughI_throw  |
+|           |        toc         |   compmod_three-judge   |
+|    ---    |        ---         |           ---           |
+|    bowl   |        bowl        |  adpmod:against_auburn  |
+|           |        xli         |     conjI_preseason     |
+|           |       bowls        | adpmod:against_oklahoma |
+|           |        xliv        |      adpmod:inI_2-1     |
+|           |      xxxviii       |      conj_play-offs     |
+|           |       xliii        |   compmod_pan-pacific   |
+|           |        xlii        |   adpmod:forI_stadiums  |
+|           |        xlvi        |   adpmod:atI_clinched   |
+|           |        xlv         |     adpmod:intoI_win    |
+|           |       super        |      amod_25-metre      |
+|    ---    |        ---         |           ---           |
+|   guitar  |       guitar       |       conjI_bongos      |
+|           |        bass        |      amod_end-blown     |
+|           |      guitars       |       conj_back-up      |
+|           |       drums        |    adpmod:onI_harris    |
+|           |     keyboards      |    adpmod:forI_adagio   |
+|           |    nyckelharpa     |   adpmod:onI_thompson   |
+|           |    glockenspiel    |      appos_mandolin     |
+|           |      6-string      |       dep_keyboard      |
+|           |     tambourine     |   adpmod:ofI_virtuoso   |
+|           |       banjo        |    adpmod:onI_foster    |
+|    ---    |        ---         |           ---           |
+|   piano   |       piano        |    adpmod:forI_adagio   |
+|           |       violin       |      amod_end-blown     |
+|           |       sonata       |       conjI_bongos      |
+|           |       cello        |    adpmod:onI_harris    |
+|           |      concerto      |   adpmod:ofI_virtuoso   |
+|           |         op         |   adpmod:onI_thompson   |
+|           |    harpsichord     |       conj_back-up      |
+|           |     concertos      |     compmod_kreutzer    |
+|           |       viola        |   compmod_vomeronasal   |
+|           |    violoncello     | adpmod:onI_supplemented |
++-----------+--------------------+-------------------------+
