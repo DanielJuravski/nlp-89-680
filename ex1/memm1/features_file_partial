@@ -1,0 +1,200 @@
+IN form=In ti-1=start ti-2ti-1=startstart w+1=an w+2=Oct.
+DT form=an wi-1=In ti-1=IN ti-2ti-1=startIN w+1=Oct. w+2=19
+NNP form=Oct. wi-2=In wi-1=an ti-1=DT ti-2ti-1=INDT w+1=19 w+2=review
+CD form=19 wi-2=an wi-1=Oct. ti-1=NNP ti-2ti-1=DTNNP w+1=review w+2=of
+NN form=review wi-2=Oct. wi-1=19 ti-1=CD ti-2ti-1=NNPCD w+1=of w+2=``
+IN form=of wi-2=19 wi-1=review ti-1=NN ti-2ti-1=CDNN w+1=`` w+2=The
+`` form=`` wi-2=review wi-1=of ti-1=IN ti-2ti-1=NNIN w+1=The w+2=Misanthrope
+DT form=The wi-2=of wi-1=`` ti-1=`` ti-2ti-1=IN`` w+1=Misanthrope w+2=''
+NN pref4=Misa suff4=rope pref3=Mis suff3=ope pref2=Mi suff2=pe pref1=M suff1=e hassupper=1 hasdigit=1 wi-2=`` wi-1=The ti-1=DT ti-2ti-1=``DT w+1='' w+2=at
+'' form='' wi-2=The wi-1=Misanthrope ti-1=NN ti-2ti-1=DTNN w+1=at w+2=Chicago
+IN form=at wi-2=Misanthrope wi-1='' ti-1='' ti-2ti-1=NN'' w+1=Chicago w+2='s
+NNP form=Chicago wi-2='' wi-1=at ti-1=IN ti-2ti-1=''IN w+1='s w+2=Goodman
+POS form='s wi-2=at wi-1=Chicago ti-1=NNP ti-2ti-1=INNNP w+1=Goodman w+2=Theatre
+NNP form=Goodman wi-2=Chicago wi-1='s ti-1=POS ti-2ti-1=NNPPOS w+1=Theatre w+2=(
+NNP form=Theatre wi-2='s wi-1=Goodman ti-1=NNP ti-2ti-1=POSNNP w+1=( w+2=``
+( form=( wi-2=Goodman wi-1=Theatre ti-1=NNP ti-2ti-1=NNPNNP w+1=`` w+2=Revitalized
+`` form=`` wi-2=Theatre wi-1=( ti-1=( ti-2ti-1=NNP( w+1=Revitalized w+2=Classics
+VBN pref4=Revi suff4=ized pref3=Rev suff3=zed pref2=Re suff2=ed pref1=R suff1=d hassupper=1 hasdigit=1 wi-2=( wi-1=`` ti-1=`` ti-2ti-1=(`` w+1=Classics w+2=Take
+NNS pref4=Clas suff4=sics pref3=Cla suff3=ics pref2=Cl suff2=cs pref1=C suff1=s hassupper=1 hasdigit=1 wi-2=`` wi-1=Revitalized ti-1=VBN ti-2ti-1=``VBN w+1=Take w+2=the
+VBP form=Take wi-2=Revitalized wi-1=Classics ti-1=NNS ti-2ti-1=VBNNNS w+1=the w+2=Stage
+DT form=the wi-2=Classics wi-1=Take ti-1=VBP ti-2ti-1=NNSVBP w+1=Stage w+2=in
+NN pref4=Stag suff4=tage pref3=Sta suff3=age pref2=St suff2=ge pref1=S suff1=e hassupper=1 hasdigit=1 wi-2=Take wi-1=the ti-1=DT ti-2ti-1=VBPDT w+1=in w+2=Windy
+IN form=in wi-2=the wi-1=Stage ti-1=NN ti-2ti-1=DTNN w+1=Windy w+2=City
+NNP pref4=Wind suff4=indy pref3=Win suff3=ndy pref2=Wi suff2=dy pref1=W suff1=y hassupper=1 hasdigit=1 wi-2=Stage wi-1=in ti-1=IN ti-2ti-1=NNIN w+1=City w+2=,
+NNP form=City wi-2=in wi-1=Windy ti-1=NNP ti-2ti-1=INNNP w+1=, w+2=''
+, form=, wi-2=Windy wi-1=City ti-1=NNP ti-2ti-1=NNPNNP w+1='' w+2=Leisure
+'' form='' wi-2=City wi-1=, ti-1=, ti-2ti-1=NNP, w+1=Leisure w+2=&
+NN pref4=Leis suff4=sure pref3=Lei suff3=ure pref2=Le suff2=re pref1=L suff1=e hassupper=1 hasdigit=1 wi-2=, wi-1='' ti-1='' ti-2ti-1=,'' w+1=& w+2=Arts
+CC form=& wi-2='' wi-1=Leisure ti-1=NN ti-2ti-1=''NN w+1=Arts w+2=)
+NNS form=Arts wi-2=Leisure wi-1=& ti-1=CC ti-2ti-1=NNCC w+1=) w+2=,
+) form=) wi-2=& wi-1=Arts ti-1=NNS ti-2ti-1=CCNNS w+1=, w+2=the
+, form=, wi-2=Arts wi-1=) ti-1=) ti-2ti-1=NNS) w+1=the w+2=role
+DT form=the wi-2=) wi-1=, ti-1=, ti-2ti-1=), w+1=role w+2=of
+NN form=role wi-2=, wi-1=the ti-1=DT ti-2ti-1=,DT w+1=of w+2=Celimene
+IN form=of wi-2=the wi-1=role ti-1=NN ti-2ti-1=DTNN w+1=Celimene w+2=,
+NNP pref4=Celi suff4=mene pref3=Cel suff3=ene pref2=Ce suff2=ne pref1=C suff1=e hassupper=1 hasdigit=1 wi-2=role wi-1=of ti-1=IN ti-2ti-1=NNIN w+1=, w+2=played
+, form=, wi-2=of wi-1=Celimene ti-1=NNP ti-2ti-1=INNNP w+1=played w+2=by
+VBN form=played wi-2=Celimene wi-1=, ti-1=, ti-2ti-1=NNP, w+1=by w+2=Kim
+IN form=by wi-2=, wi-1=played ti-1=VBN ti-2ti-1=,VBN w+1=Kim w+2=Cattrall
+NNP form=Kim wi-2=played wi-1=by ti-1=IN ti-2ti-1=VBNIN w+1=Cattrall w+2=,
+NNP pref4=Catt suff4=rall pref3=Cat suff3=all pref2=Ca suff2=ll pref1=C suff1=l hassupper=1 hasdigit=1 wi-2=by wi-1=Kim ti-1=NNP ti-2ti-1=INNNP w+1=, w+2=was
+, form=, wi-2=Kim wi-1=Cattrall ti-1=NNP ti-2ti-1=NNPNNP w+1=was w+2=mistakenly
+VBD form=was wi-2=Cattrall wi-1=, ti-1=, ti-2ti-1=NNP, w+1=mistakenly w+2=attributed
+RB form=mistakenly wi-2=, wi-1=was ti-1=VBD ti-2ti-1=,VBD w+1=attributed w+2=to
+VBN form=attributed wi-2=was wi-1=mistakenly ti-1=RB ti-2ti-1=VBDRB w+1=to w+2=Christina
+IN form=to wi-2=mistakenly wi-1=attributed ti-1=VBN ti-2ti-1=RBVBN w+1=Christina w+2=Haag
+NNP pref4=Chri suff4=tina pref3=Chr suff3=ina pref2=Ch suff2=na pref1=C suff1=a hassupper=1 hasdigit=1 wi-2=attributed wi-1=to ti-1=IN ti-2ti-1=VBNIN w+1=Haag w+2=.
+NNP pref4=Haag suff4=Haag pref3=Haa suff3=aag pref2=Ha suff2=ag pref1=H suff1=g hassupper=1 hasdigit=1 wi-2=to wi-1=Christina ti-1=NNP ti-2ti-1=INNNP w+1=.
+. form=. wi-2=Christina wi-1=Haag ti-1=NNP ti-2ti-1=NNPNNP
+NNP form=Ms. ti-1=start ti-2ti-1=startstart w+1=Haag w+2=plays
+NNP pref4=Haag suff4=Haag pref3=Haa suff3=aag pref2=Ha suff2=ag pref1=H suff1=g hassupper=1 hasdigit=1 wi-1=Ms. ti-1=NNP ti-2ti-1=startNNP w+1=plays w+2=Elianti
+VBZ form=plays wi-2=Ms. wi-1=Haag ti-1=NNP ti-2ti-1=NNPNNP w+1=Elianti w+2=.
+NNP pref4=Elia suff4=anti pref3=Eli suff3=nti pref2=El suff2=ti pref1=E suff1=i hassupper=1 hasdigit=1 wi-2=Haag wi-1=plays ti-1=VBZ ti-2ti-1=NNPVBZ w+1=.
+. form=. wi-2=plays wi-1=Elianti ti-1=NNP ti-2ti-1=VBZNNP
+NNP pref4=Roll suff4=oyce pref3=Rol suff3=yce pref2=Ro suff2=ce pref1=R suff1=e hashyph=1 hassupper=1 hasdigit=1 ti-1=start ti-2ti-1=startstart w+1=Motor w+2=Cars
+NNP form=Motor wi-1=Rolls-Royce ti-1=NNP ti-2ti-1=startNNP w+1=Cars w+2=Inc.
+NNPS pref4=Cars suff4=Cars pref3=Car suff3=ars pref2=Ca suff2=rs pref1=C suff1=s hassupper=1 hasdigit=1 wi-2=Rolls-Royce wi-1=Motor ti-1=NNP ti-2ti-1=NNPNNP w+1=Inc. w+2=said
+NNP form=Inc. wi-2=Motor wi-1=Cars ti-1=NNPS ti-2ti-1=NNPNNPS w+1=said w+2=it
+VBD form=said wi-2=Cars wi-1=Inc. ti-1=NNP ti-2ti-1=NNPSNNP w+1=it w+2=expects
+PRP form=it wi-2=Inc. wi-1=said ti-1=VBD ti-2ti-1=NNPVBD w+1=expects w+2=its
+VBZ form=expects wi-2=said wi-1=it ti-1=PRP ti-2ti-1=VBDPRP w+1=its w+2=U.S.
+PRP$ form=its wi-2=it wi-1=expects ti-1=VBZ ti-2ti-1=PRPVBZ w+1=U.S. w+2=sales
+NNP form=U.S. wi-2=expects wi-1=its ti-1=PRP$ ti-2ti-1=VBZPRP$ w+1=sales w+2=to
+NNS form=sales wi-2=its wi-1=U.S. ti-1=NNP ti-2ti-1=PRP$NNP w+1=to w+2=remain
+TO form=to wi-2=U.S. wi-1=sales ti-1=NNS ti-2ti-1=NNPNNS w+1=remain w+2=steady
+VB form=remain wi-2=sales wi-1=to ti-1=TO ti-2ti-1=NNSTO w+1=steady w+2=at
+JJ form=steady wi-2=to wi-1=remain ti-1=VB ti-2ti-1=TOVB w+1=at w+2=about
+IN form=at wi-2=remain wi-1=steady ti-1=JJ ti-2ti-1=VBJJ w+1=about w+2=1,200
+IN form=about wi-2=steady wi-1=at ti-1=IN ti-2ti-1=JJIN w+1=1,200 w+2=cars
+CD form=1,200 wi-2=at wi-1=about ti-1=IN ti-2ti-1=ININ w+1=cars w+2=in
+NNS form=cars wi-2=about wi-1=1,200 ti-1=CD ti-2ti-1=INCD w+1=in w+2=1990
+IN form=in wi-2=1,200 wi-1=cars ti-1=NNS ti-2ti-1=CDNNS w+1=1990 w+2=.
+CD form=1990 wi-2=cars wi-1=in ti-1=IN ti-2ti-1=NNSIN w+1=.
+. form=. wi-2=in wi-1=1990 ti-1=CD ti-2ti-1=INCD
+DT form=The ti-1=start ti-2ti-1=startstart w+1=luxury w+2=auto
+NN form=luxury wi-1=The ti-1=DT ti-2ti-1=startDT w+1=auto w+2=maker
+NN form=auto wi-2=The wi-1=luxury ti-1=NN ti-2ti-1=DTNN w+1=maker w+2=last
+NN form=maker wi-2=luxury wi-1=auto ti-1=NN ti-2ti-1=NNNN w+1=last w+2=year
+JJ form=last wi-2=auto wi-1=maker ti-1=NN ti-2ti-1=NNNN w+1=year w+2=sold
+NN form=year wi-2=maker wi-1=last ti-1=JJ ti-2ti-1=NNJJ w+1=sold w+2=1,214
+VBD form=sold wi-2=last wi-1=year ti-1=NN ti-2ti-1=JJNN w+1=1,214 w+2=cars
+CD pref4=1,21 suff4=,214 pref3=1,2 suff3=214 pref2=1, suff2=14 pref1=1 suff1=4 hassupper=1 hasdigit=1 wi-2=year wi-1=sold ti-1=VBD ti-2ti-1=NNVBD w+1=cars w+2=in
+NNS form=cars wi-2=sold wi-1=1,214 ti-1=CD ti-2ti-1=VBDCD w+1=in w+2=the
+IN form=in wi-2=1,214 wi-1=cars ti-1=NNS ti-2ti-1=CDNNS w+1=the w+2=U.S.
+DT form=the wi-2=cars wi-1=in ti-1=IN ti-2ti-1=NNSIN w+1=U.S.
+NNP form=U.S. wi-2=in wi-1=the ti-1=DT ti-2ti-1=INDT
+NNP form=Howard ti-1=start ti-2ti-1=startstart w+1=Mosher w+2=,
+NNP pref4=Mosh suff4=sher pref3=Mos suff3=her pref2=Mo suff2=er pref1=M suff1=r hassupper=1 hasdigit=1 wi-1=Howard ti-1=NNP ti-2ti-1=startNNP w+1=, w+2=president
+, form=, wi-2=Howard wi-1=Mosher ti-1=NNP ti-2ti-1=NNPNNP w+1=president w+2=and
+NN form=president wi-2=Mosher wi-1=, ti-1=, ti-2ti-1=NNP, w+1=and w+2=chief
+CC form=and wi-2=, wi-1=president ti-1=NN ti-2ti-1=,NN w+1=chief w+2=executive
+JJ form=chief wi-2=president wi-1=and ti-1=CC ti-2ti-1=NNCC w+1=executive w+2=officer
+NN form=executive wi-2=and wi-1=chief ti-1=JJ ti-2ti-1=CCJJ w+1=officer w+2=,
+NN form=officer wi-2=chief wi-1=executive ti-1=NN ti-2ti-1=JJNN w+1=, w+2=said
+, form=, wi-2=executive wi-1=officer ti-1=NN ti-2ti-1=NNNN w+1=said w+2=he
+VBD form=said wi-2=officer wi-1=, ti-1=, ti-2ti-1=NN, w+1=he w+2=anticipates
+PRP form=he wi-2=, wi-1=said ti-1=VBD ti-2ti-1=,VBD w+1=anticipates w+2=growth
+VBZ form=anticipates wi-2=said wi-1=he ti-1=PRP ti-2ti-1=VBDPRP w+1=growth w+2=for
+NN form=growth wi-2=he wi-1=anticipates ti-1=VBZ ti-2ti-1=PRPVBZ w+1=for w+2=the
+IN form=for wi-2=anticipates wi-1=growth ti-1=NN ti-2ti-1=VBZNN w+1=the w+2=luxury
+NNS form=airplanes wi-2=fly wi-1=the ti-1=DT ti-2ti-1=VBDT w+1=.
+. form=. wi-2=the wi-1=airplanes ti-1=NNS ti-2ti-1=DTNNS
+IN form=If ti-1=start ti-2ti-1=startstart w+1=they w+2=were
+PRP form=they wi-1=If ti-1=IN ti-2ti-1=startIN w+1=were w+2=to
+VBD form=were wi-2=If wi-1=they ti-1=PRP ti-2ti-1=INPRP w+1=to w+2=insist
+TO form=to wi-2=they wi-1=were ti-1=VBD ti-2ti-1=PRPVBD w+1=insist w+2=on
+VB form=insist wi-2=were wi-1=to ti-1=TO ti-2ti-1=VBDTO w+1=on w+2=a
+IN form=on wi-2=to wi-1=insist ti-1=VB ti-2ti-1=TOVB w+1=a w+2=low
+DT form=a wi-2=insist wi-1=on ti-1=IN ti-2ti-1=VBIN w+1=low w+2=bid
+JJ form=low wi-2=on wi-1=a ti-1=DT ti-2ti-1=INDT w+1=bid w+2=of
+NN form=bid wi-2=a wi-1=low ti-1=JJ ti-2ti-1=DTJJ w+1=of w+2=,
+IN form=of wi-2=low wi-1=bid ti-1=NN ti-2ti-1=JJNN w+1=, w+2=say
+, form=, wi-2=bid wi-1=of ti-1=IN ti-2ti-1=NNIN w+1=say w+2=$
+VB form=say wi-2=of wi-1=, ti-1=, ti-2ti-1=IN, w+1=$ w+2=200
+$ form=$ wi-2=, wi-1=say ti-1=VB ti-2ti-1=,VB w+1=200 w+2=a
+CD form=200 wi-2=say wi-1=$ ti-1=$ ti-2ti-1=VB$ w+1=a w+2=share
+DT form=a wi-2=$ wi-1=200 ti-1=CD ti-2ti-1=$CD w+1=share w+2=,
+NN form=share wi-2=200 wi-1=a ti-1=DT ti-2ti-1=CDDT w+1=, w+2=the
+, form=, wi-2=a wi-1=share ti-1=NN ti-2ti-1=DTNN w+1=the w+2=board
+DT form=the wi-2=share wi-1=, ti-1=, ti-2ti-1=NN, w+1=board w+2=might
+NN form=board wi-2=, wi-1=the ti-1=DT ti-2ti-1=,DT w+1=might w+2=n't
+MD form=might wi-2=the wi-1=board ti-1=NN ti-2ti-1=DTNN w+1=n't w+2=be
+RB form=n't wi-2=board wi-1=might ti-1=MD ti-2ti-1=NNMD w+1=be w+2=able
+VB form=be wi-2=might wi-1=n't ti-1=RB ti-2ti-1=MDRB w+1=able w+2=to
+JJ form=able wi-2=n't wi-1=be ti-1=VB ti-2ti-1=RBVB w+1=to w+2=obtain
+TO form=to wi-2=be wi-1=able ti-1=JJ ti-2ti-1=VBJJ w+1=obtain w+2=a
+VB form=obtain wi-2=able wi-1=to ti-1=TO ti-2ti-1=JJTO w+1=a w+2=higher
+DT form=a wi-2=to wi-1=obtain ti-1=VB ti-2ti-1=TOVB w+1=higher w+2=offer
+JJR form=higher wi-2=obtain wi-1=a ti-1=DT ti-2ti-1=VBDT w+1=offer w+2=from
+NN form=offer wi-2=a wi-1=higher ti-1=JJR ti-2ti-1=DTJJR w+1=from w+2=other
+IN form=from wi-2=higher wi-1=offer ti-1=NN ti-2ti-1=JJRNN w+1=other w+2=bidders
+JJ form=other wi-2=offer wi-1=from ti-1=IN ti-2ti-1=NNIN w+1=bidders w+2=because
+NNS form=bidders wi-2=from wi-1=other ti-1=JJ ti-2ti-1=INJJ w+1=because w+2=banks
+IN form=because wi-2=other wi-1=bidders ti-1=NNS ti-2ti-1=JJNNS w+1=banks w+2=might
+NNS form=banks wi-2=bidders wi-1=because ti-1=IN ti-2ti-1=NNSIN w+1=might w+2=hesitate
+MD form=might wi-2=because wi-1=banks ti-1=NNS ti-2ti-1=INNNS w+1=hesitate w+2=to
+VB form=hesitate wi-2=banks wi-1=might ti-1=MD ti-2ti-1=NNSMD w+1=to w+2=finance
+TO form=to wi-2=might wi-1=hesitate ti-1=VB ti-2ti-1=MDVB w+1=finance w+2=a
+VB form=finance wi-2=hesitate wi-1=to ti-1=TO ti-2ti-1=VBTO w+1=a w+2=transaction
+DT form=a wi-2=to wi-1=finance ti-1=VB ti-2ti-1=TOVB w+1=transaction w+2=the
+NN form=transaction wi-2=finance wi-1=a ti-1=DT ti-2ti-1=VBDT w+1=the w+2=pilots
+DT form=the wi-2=a wi-1=transaction ti-1=NN ti-2ti-1=DTNN w+1=pilots w+2=oppose
+NNS form=pilots wi-2=transaction wi-1=the ti-1=DT ti-2ti-1=NNDT w+1=oppose w+2=.
+VBP form=oppose wi-2=the wi-1=pilots ti-1=NNS ti-2ti-1=DTNNS w+1=.
+. form=. wi-2=pilots wi-1=oppose ti-1=VBP ti-2ti-1=NNSVBP
+RB form=Also ti-1=start ti-2ti-1=startstart w+1=, w+2=because
+, form=, wi-1=Also ti-1=RB ti-2ti-1=startRB w+1=because w+2=UAL
+IN form=because wi-2=Also wi-1=, ti-1=, ti-2ti-1=RB, w+1=UAL w+2=Chairman
+NNP form=UAL wi-2=, wi-1=because ti-1=IN ti-2ti-1=,IN w+1=Chairman w+2=Stephen
+NNP form=Chairman wi-2=because wi-1=UAL ti-1=NNP ti-2ti-1=INNNP w+1=Stephen w+2=Wolf
+NNP form=Stephen wi-2=UAL wi-1=Chairman ti-1=NNP ti-2ti-1=NNPNNP w+1=Wolf w+2=and
+NNP form=Wolf wi-2=Chairman wi-1=Stephen ti-1=NNP ti-2ti-1=NNPNNP w+1=and w+2=other
+CC form=and wi-2=Stephen wi-1=Wolf ti-1=NNP ti-2ti-1=NNPNNP w+1=other w+2=UAL
+JJ form=other wi-2=Wolf wi-1=and ti-1=CC ti-2ti-1=NNPCC w+1=UAL w+2=executives
+NNP form=UAL wi-2=and wi-1=other ti-1=JJ ti-2ti-1=CCJJ w+1=executives w+2=have
+NNS form=executives wi-2=other wi-1=UAL ti-1=NNP ti-2ti-1=JJNNP w+1=have w+2=joined
+VBP form=have wi-2=UAL wi-1=executives ti-1=NNS ti-2ti-1=NNPNNS w+1=joined w+2=the
+VBN form=joined wi-2=executives wi-1=have ti-1=VBP ti-2ti-1=NNSVBP w+1=the w+2=pilots
+DT form=the wi-2=have wi-1=joined ti-1=VBN ti-2ti-1=VBPVBN w+1=pilots w+2='
+NNS form=pilots wi-2=joined wi-1=the ti-1=DT ti-2ti-1=VBNDT w+1=' w+2=bid
+POS form=' wi-2=the wi-1=pilots ti-1=NNS ti-2ti-1=DTNNS w+1=bid w+2=,
+NN form=bid wi-2=pilots wi-1=' ti-1=POS ti-2ti-1=NNSPOS w+1=, w+2=the
+, form=, wi-2=' wi-1=bid ti-1=NN ti-2ti-1=POSNN w+1=the w+2=board
+DT form=the wi-2=bid wi-1=, ti-1=, ti-2ti-1=NN, w+1=board w+2=might
+NN form=board wi-2=, wi-1=the ti-1=DT ti-2ti-1=,DT w+1=might w+2=be
+MD form=might wi-2=the wi-1=board ti-1=NN ti-2ti-1=DTNN w+1=be w+2=forced
+VB form=be wi-2=board wi-1=might ti-1=MD ti-2ti-1=NNMD w+1=forced w+2=to
+VBN form=forced wi-2=might wi-1=be ti-1=VB ti-2ti-1=MDVB w+1=to w+2=exclude
+TO form=to wi-2=be wi-1=forced ti-1=VBN ti-2ti-1=VBVBN w+1=exclude w+2=him
+VB form=exclude wi-2=forced wi-1=to ti-1=TO ti-2ti-1=VBNTO w+1=him w+2=from
+PRP form=him wi-2=to wi-1=exclude ti-1=VB ti-2ti-1=TOVB w+1=from w+2=its
+IN form=from wi-2=exclude wi-1=him ti-1=PRP ti-2ti-1=VBPRP w+1=its w+2=deliberations
+PRP$ form=its wi-2=him wi-1=from ti-1=IN ti-2ti-1=PRPIN w+1=deliberations w+2=in
+NNS form=deliberations wi-2=from wi-1=its ti-1=PRP$ ti-2ti-1=INPRP$ w+1=in w+2=order
+IN form=in wi-2=its wi-1=deliberations ti-1=NNS ti-2ti-1=PRP$NNS w+1=order w+2=to
+NN form=order wi-2=deliberations wi-1=in ti-1=IN ti-2ti-1=NNSIN w+1=to w+2=be
+TO form=to wi-2=in wi-1=order ti-1=NN ti-2ti-1=INNN w+1=be w+2=fair
+VB form=be wi-2=order wi-1=to ti-1=TO ti-2ti-1=NNTO w+1=fair w+2=to
+JJ form=fair wi-2=to wi-1=be ti-1=VB ti-2ti-1=TOVB w+1=to w+2=other
+IN form=to wi-2=be wi-1=fair ti-1=JJ ti-2ti-1=VBJJ w+1=other w+2=bidders
+JJ form=other wi-2=fair wi-1=to ti-1=IN ti-2ti-1=JJIN w+1=bidders w+2=.
+NNS form=bidders wi-2=to wi-1=other ti-1=JJ ti-2ti-1=INJJ w+1=.
+. form=. wi-2=other wi-1=bidders ti-1=NNS ti-2ti-1=JJNNS
+DT form=That ti-1=start ti-2ti-1=startstart w+1=could w+2=cost
+MD form=could wi-1=That ti-1=DT ti-2ti-1=startDT w+1=cost w+2=him
+VB form=cost wi-2=That wi-1=could ti-1=MD ti-2ti-1=DTMD w+1=him w+2=the
+PRP form=him wi-2=could wi-1=cost ti-1=VB ti-2ti-1=MDVB w+1=the w+2=chance
+DT form=the wi-2=cost wi-1=him ti-1=PRP ti-2ti-1=VBPRP w+1=chance w+2=to
+NN form=chance wi-2=him wi-1=the ti-1=DT ti-2ti-1=PRPDT w+1=to w+2=influence
+TO form=to wi-2=the wi-1=chance ti-1=NN ti-2ti-1=DTNN w+1=influence w+2=the
+VB form=influence wi-2=chance wi-1=to ti-1=TO ti-2ti-1=NNTO w+1=the w+2=outcome
+DT form=the wi-2=to wi-1=influence ti-1=VB ti-2ti-1=TOVB w+1=outcome w+2=and
+NN form=outcome wi-2=influence wi-1=the ti-1=DT ti-2ti-1=VBDT w+1=and w+2=perhaps
+CC form=and wi-2=the wi-1=outcome ti-1=NN ti-2ti-1=DTNN w+1=perhaps w+2=join
+RB form=perhaps wi-2=outcome wi-1=and ti-1=CC ti-2ti-1=NNCC w+1=join w+2=the
+VB form=join wi-2=and wi-1=perhaps ti-1=RB ti-2ti-1=CCRB w+1=the w+2=winning
+DT form=the wi-2=perhaps wi-1=join ti-1=VB ti-2ti-1=RBVB w+1=winning w+2=bidder
+VBG form=winning wi-2=join wi-1=the ti-1=DT ti-2ti-1=VBDT w+1=bidder w+2=.
+NN form=bidder wi-2=the wi-1=winning ti-1=VBG ti-2ti-1=DTVBG w+1=.
+. form=. wi-2=winning wi-1=bidder ti-1=NN ti-2ti-1=VBGNN

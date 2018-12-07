@@ -1,0 +1,13 @@
+========================
+How to run GreedyTag.py:
+========================
+
+python GreedyTag.py input_file_name q_mle_filename e_mle_filename output_file_name extra_args
+
+
+
+=====================
+How to run HMMTag.py:
+=====================
+
+python HMMTag.py input_file_name q_mle_filename e_mle_filename output_file_name extra_args

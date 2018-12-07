@@ -1,0 +1,6 @@
+How to run MEMM1:
+=================
+
+$ python ExtractFeatures.py corpus_file features_file
+$ python ConvertFeatures.py features_file feature_vecs_file feature_map_file
+$ bash TrainSolver.sh feature_vecs_file model_file

@@ -1,0 +1,8 @@
+
+=====================
+How to run MEMMTag_ner.py:
+(notice lexicons_dir resides in ../ner_data/lexicons)
+=====================
+
+python MEMMTag_ner.py input_file_name model_filename feature_map_filename output_file_name lexicons_dir
+

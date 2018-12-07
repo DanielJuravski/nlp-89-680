@@ -1,0 +1,89 @@
+NER Results:
+========================================================================
+HMM-greedy:
+-----------
+Accuracy: 0.947516382954
+
+All-types       Prec:0.735274318411 Rec:0.775195173882 F1:0.754707203317
+       LOC      Prec:0.810560696788 Rec:0.817682591982 F1:0.81410606889
+      MISC      Prec:0.712581344902 Rec:0.763953488372 F1:0.737373737374
+       PER      Prec:0.728013029316 Rec:0.874755381605 F1:0.794666666667
+       ORG      Prec:0.657718120805 Rec:0.620253164557 F1:0.638436482085
+
+=========================================================================
+HMM-viterbi:
+------------
+Accuracy: 0.960952344023
+
+All-types       Prec:0.792325816223 Rec:0.820637964093 F1:0.806233410395
+       LOC      Prec:0.822536744692 Rec:0.882078225336 F1:0.851267605634
+      MISC      Prec:0.759219088937 Rec:0.832342449465 F1:0.794100964265
+       PER      Prec:0.815418023887 Rec:0.859267734554 F1:0.836768802228
+       ORG      Prec:0.741983594333 Rec:0.693379790941 F1:0.716858789625
+
+=========================================================================
+MEMM-greedy:
+------------
+Accuracy: 0.937182519679
+
+All-types       Prec:0.639515314709 Rec:0.841638981174 F1:0.726785885053
+       LOC      Prec:0.677735438214 Rec:0.908096280088 F1:0.776184538653
+      MISC      Prec:0.528199566161 Rec:0.863475177305 F1:0.655450874832
+       PER      Prec:0.734527687296 Rec:0.81212484994 F1:0.771379703535
+       ORG      Prec:0.533184190902 Rec:0.78227571116 F1:0.634146341463
+
+=========================================================================
+MEMM-viterbi:
+-------------
+Accuracy: 0.95835433712
+
+All-types       Prec:0.763884214069 Rec:0.84149054505 F1:0.800811573747
+       LOC      Prec:0.82362547632 Rec:0.855769230769 F1:0.839389736477
+      MISC      Prec:0.716919739696 Rec:0.837769328264 F1:0.772647574518
+       PER      Prec:0.843105320304 Rec:0.889461626575 F1:0.865663322185
+       ORG      Prec:0.605518269948 Rec:0.744271310724 F1:0.667763157895
+=========================================================================
+
+
+
+In both cases the accuracy higher then the POS models by ~1% because of:
+1. NER tag set size is 10
+   POS tag set size is ~45
+   If the tag set is smaller, then there is more probability to predict the correct tag.
+2. The most common tag of the NER tag set is 'O'. The more the model will predict it, the accuracy will raise.
+
+
+The span-based F scores are lower than the accuracy scores because when we compute the accuracy scores, we compare each pred word tag to the gold word tag.
+At this case (F scores) we compare all the span as a one word. We are looking for whole the tags in the span words to be correct. That way we need to correct about every word in the span to be correct on the whole span unit.
+
+
+Attempts to improve the MEMM tagger for the NER data:
+Attempt 1, For each word we ran over the lexicons files,
+if the word appeared in a lexicon file then we added a feature 'lexicon=<name of file it appeared in>'
+This produced a very slight improvment:
+
+Accuracy: 0.958722711233
+
+All-types       Prec:0.796334361083 Rec:0.782396499495 F1:0.789303904924
+       LOC      Prec:0.81332628239 Rec:0.837234621666 F1:0.825107296137
+      MISC      Prec:0.81 Rec:0.702819956616 F1:0.752613240418
+       PER      Prec:0.825951016154 Rec:0.860477741585 F1:0.842860941239
+       ORG      Prec:0.714983713355 Rec:0.654735272185 F1:0.683534449202
+
+
+Attempt 2, For each word we ran over the lexicons files,
+if the word appeared in a lexicon file then we also checked if it appears in the exact context,
+meaning for the word museum, if when searching the lexicons we ran into "museum of modern art"
+than we'd check that the following words in the sentence are "of modern art", only if this condition
+was met then we add the feature 'lexicon=<name of file it appeared in>'
+This produced more improvement:
+
+Accuracy: 0.959478847571
+
+All-types       Prec:0.821873886712 Rec:0.77650622686 F1:0.798546209761
+       LOC      Prec:0.851134477034 Rec:0.837234621666 F1:0.844127332602
+      MISC      Prec:0.8325 Rec:0.722342733189 F1:0.773519163763
+       PER      Prec:0.856906989543 Rec:0.845276872964 F1:0.851052200055
+       ORG      Prec:0.716806722689 Rec:0.636092468307 F1:0.67404188068
+
+

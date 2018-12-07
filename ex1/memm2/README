@@ -1,0 +1,13 @@
+==============================
+How to run GreedyMaxEntTag.py:
+==============================
+
+python GreedyMaxEntTag.py input_file_name model_filename feature_map_filename output_file_name
+
+
+
+=====================
+How to run MEMMTag.py:
+=====================
+
+python MEMMTag.py input_file_name model_filename feature_map_filename output_file_name
