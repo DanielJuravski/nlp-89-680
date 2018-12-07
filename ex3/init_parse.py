@@ -133,7 +133,45 @@ def window_parse(input_data, output_file):
 
 
 def dependency_parse(input_data, output_file):
-    pass
+    word_contexts = {}
+    sentence_lines = []
+    with open(input_data, 'r') as f_in:
+        with open(output_file, 'w') as f_out:
+            file_lines = f_in.readlines()
+            for file_line in file_lines:
+                if file_line:
+                    sentence_lines.append(file_line)
+                else:
+                    #proccesing all senetence lines here
+                    line_words = [] #list not set or dict. to include reocurrence of word in same sentence
+                    for i in range(len(sentence_lines)):
+                        word_line = sentence_lines[i].split()
+                        word = word_line[1]
+                        word_contexts = []
+                        for j in sentence_lines:
+                            if i != j:
+                                context_line = sentence_lines[i].split()
+                                context_word = context_line[1]
+                                #1) check if there is an edge between context and word or vice versa
+                                #if so -> word_contexts.append((context_word, direction))
+
+                                #2)if context is preposition then also add the below
+                                #concat lemma form of proposition to the word it relates to
+                                # if target word is president and we have 'president with the apple'
+                                # current context word is with than we also add
+                                #  word_contexts.append((withapple, direction))
+
+
+                        #we add all contexts to word
+                        line_words.append((word, word_contexts))
+
+                    #finished processing sentence
+                    for (w,c) in line_words:  #fill main dictionary word_contexts
+                        w_contexts = word_contexts.get(w, Counter()) #get counter or new counter
+                        for context in c:
+                            word_contexts[context] += 1
+                        word_contexts[w] = w_contexts
+                    sentence_lines = [] #clear sentence lines
 
 
 if __name__ == '__main__':
