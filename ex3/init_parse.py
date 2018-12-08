@@ -104,7 +104,6 @@ def window_parse(input_data, output_file):
     with open(input_data, 'r') as f_in:
         with open(output_file, 'w') as f_out:
             file_lines = f_in.readlines()
-            start_line = 0
             line_words = set()
             for file_line_i in range(len(file_lines)):
                 file_line = file_lines[file_line_i]
@@ -126,7 +125,6 @@ def window_parse(input_data, output_file):
                             f_out.write(string2file2)
                             f_out.write(string2file3)
                             f_out.write(string2file4)
-                            #print string2file
                 else:  # move to the next word
                     start_line = file_line_i+1
                     line_words = set()
@@ -138,39 +136,43 @@ def dependency_parse(input_data, output_file):
         with open(output_file, 'w') as f_out:
             file_lines = f_in.readlines()
             for file_line in file_lines:
-                if file_line:
-                    sentence_lines.append(file_line)
+                line = file_line.split()
+                if line:
+                    sentence_lines.append(line)
                 else:
                     #proccesing all senetence lines here
-                    line_words = [] #list not set or dict. to include reocurrence of word in same sentence
-                    for i in range(len(sentence_lines)):
-                        word_line = sentence_lines[i].split()
-                        word = word_line[1]
-                        word_contexts = []
-                        for j in sentence_lines:
-                            if i != j:
-                                context_line = sentence_lines[i].split()
-                                context_word = context_line[1]
-                                #1) check if there is an edge between context and word or vice versa
-                                #if context_line[7] == word_line[0]:
-                                #if so -> word_contexts.append((context_word, direction))
+                    this_line_word_context = [] #list not set or dict. to include reocurrence of word in same sentence
+                    for line_fields in sentence_lines:
+                        word = line_fields[2]
+                        word_tag = line_fields[4]
+                        head = int(line_fields[6])
+                        head_tag = sentence_lines[head-1][4]
+                        head_word = sentence_lines[head - 1][2]
+                        deprel = line_fields[7]
+                        if word_tag in CONTEXT_TEGSET:
+                            word_counts[word] += 1
+                            if head != 0:  # ROOT
+                                if head_tag != 'IN':
+                                    att1 = head_word + "|" + deprel + "|<"  # < is relation direction
+                                    att2 = word + "|" + deprel + "|>"  # < is relation direction
+                                    # we add all contexts to word
+                                    this_line_word_context.append((word, att1))
+                                    this_line_word_context.append((head_word, att2))
+                                else:
+                                    head_head_ID = int(sentence_lines[head - 1][6])
+                                    head_head_word = sentence_lines[head_head_ID-1][2]
+                                    att1 = head_head_word + "|" + deprel + "|" + head_word + "|<"
+                                    att2 = word + "|" + deprel + "|" + head_word + "|>"
+                                    # we add all contexts to word
+                                    this_line_word_context.append((word, att1))
+                                    this_line_word_context.append((head_head_word, att2))
 
-                                #2)if context is preposition then also add the below
-                                #concat lemma form of proposition to the word it relates to
-                                # if target word is president and we have 'president with the apple'
-                                # current context word is with than we also add
-                                #  word_contexts.append((withapple, direction))
 
-
-                        #we add all contexts to word
-                        line_words.append((word, word_contexts))
-
-                    #finished processing sentence
-                    for (w,c) in line_words:  #fill main dictionary word_contexts
-                         for context in c:
-                             string2file = w + ' ' + context + '\n'
-                             f_out.write(string2file)
-                    sentence_lines = [] #clear sentence lines
+                    # finished processing sentence
+                    for (w,c) in this_line_word_context:
+                        string2file = w + ' ' + c + '\n'
+                        f_out.write(string2file)
+                    sentence_lines = []  # clear sentence lines
 
 
 if __name__ == '__main__':

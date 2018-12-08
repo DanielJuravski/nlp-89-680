@@ -2,7 +2,8 @@ import sys
 from collections import Counter
 import numpy as np
 import operator
-from close_words import TARGET_WORDS
+
+TARGET_WORDS = ["car", "bus", "hospital", "hotel", "gun", "bomb", "horse", "fox", "table", "bowl", "guitar", "piano"]
 
 p_word_dict = {}
 p_att_dict = {}
@@ -86,9 +87,7 @@ def loadData(data_file_name, good_words_file):
             word_context_occurrence = all_word_context[word_context]
             word_count = total_word_occurrence_count[word]
             context_count = total_context_occurrence_count[word_context]
-            #word_context_PMI = PMI(word_context_occurrence, total_word_context_occurrence_count,
-            #                       word_count, total_words_count,
-            #                       context_count, total_context_count)
+
             word_context_PMI, p_u_att, p_u, p_att = PMI(word_context_occurrence, total_word_context_count,
                                     word_count, total_words_count,
                                     context_count, total_context_count)
@@ -96,6 +95,7 @@ def loadData(data_file_name, good_words_file):
             total_PMI += word_context_PMI ** 2
 
             all_word_context[word_context] = word_context_PMI
+
             p_word_dict[word] = p_u
             p_att_dict[word_context] = p_att
             p_word_att_dict[(word, word_context)] = p_u_att
@@ -107,7 +107,6 @@ def loadData(data_file_name, good_words_file):
     print sum(p_word_dict.values())
     print sum(p_att_dict.values())
     print sum(p_word_att_dict.values())
-
 
     return main_dict, attribute_dict
 
@@ -129,11 +128,9 @@ def findSimilar(u, main_dict, attribute_dict, num_of_words):
         final_words = sorted_DT[:num_of_words]
         return [x[0] for x in final_words]
 
-
     else:
         print "ERROR: no word '" + u + "' in main_dict !"
 
-    pass
 
 def find_highest_contexts(target_word, main_dict, max_attributes):
     if target_word in main_dict:
@@ -143,29 +140,23 @@ def find_highest_contexts(target_word, main_dict, max_attributes):
         return [x[0] for x in sorted_attributes[:max_attributes]]
 
 
-
-
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         data_file_name = sys.argv[1]
         good_words_file = sys.argv[2]
     else:
-        data_file_name = 'data/huge_sorted'
-        good_words_file = 'data/huge_words'
-        # data_file_name = 'parsed_data/huge_sample_sorted'
+        data_file_name = 'data/huge_sorted_dep'
+        good_words_file = 'data/huge_good_words_dep'
 
     main_dict, attribute_dict = loadData(data_file_name, good_words_file)
 
-    # #debug
-    # TARGET_WORDS=['University', 'performed']
-
     for target_word in TARGET_WORDS:
-        similar_words = findSimilar(target_word, main_dict, attribute_dict, 20)
+        similar_words = findSimilar(target_word, main_dict, attribute_dict, 21)
         print "target word is: " + target_word
         for i, w in enumerate(similar_words):
             print("----close word no %d: %s" % (i, w))
 
-        highest_contexts = find_highest_contexts(target_word, main_dict, 20)
+        highest_contexts = find_highest_contexts(target_word, main_dict, 21)
         for i, w in enumerate(highest_contexts):
             print("----context no %d: %s" % (i, w))
 
