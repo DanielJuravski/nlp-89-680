@@ -150,8 +150,8 @@ def dependency_parse(input_data, output_file):
                         head_word = sentence_lines[head - 1][2]
                         deprel = line_fields[7]
                         if word_tag in CONTEXT_TEGSET:
-                            word_counts[word] += 1
                             if head != 0:  # ROOT
+                                word_counts[word] += 1
                                 if head_tag != 'IN':
                                     att1 = head_word + "|" + deprel + "|<"  # < is relation direction
                                     att2 = word + "|" + deprel + "|>"  # < is relation direction

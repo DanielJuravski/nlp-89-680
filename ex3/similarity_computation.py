@@ -79,6 +79,7 @@ def loadData(data_file_name, good_words_file):
     total_context_count = sum(total_context_occurrence_count.values())
     total_word_context_count = sum([sum(main_dict[x].values()) for x in main_dict])
 
+    #print "avg num of feat: " + str(np.average([len((main_dict[x]) for x in main_dict)]))
 
     for word in main_dict:
         total_PMI = 0
@@ -145,19 +146,22 @@ if __name__ == '__main__':
         data_file_name = sys.argv[1]
         good_words_file = sys.argv[2]
     else:
-        data_file_name = 'data/huge_sorted_dep'
-        good_words_file = 'data/huge_good_words_dep'
+        data_file_name = 'data/huge_sorted_window'
+        good_words_file = 'data/huge_good_words_window'
 
     main_dict, attribute_dict = loadData(data_file_name, good_words_file)
 
     for target_word in TARGET_WORDS:
         similar_words = findSimilar(target_word, main_dict, attribute_dict, 21)
         print "target word is: " + target_word
+        print "----close words:"
         for i, w in enumerate(similar_words):
-            print("----close word no %d: %s" % (i, w))
+            print("%s" % (w))
+            #print("----close word no %d: %s" % (i, w))
 
         highest_contexts = find_highest_contexts(target_word, main_dict, 21)
+        print"----context"
         for i, w in enumerate(highest_contexts):
-            print("----context no %d: %s" % (i, w))
+            print("%s" % (w))
 
 
