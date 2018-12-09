@@ -8,13 +8,6 @@ CONTEXT_TEGSET = {'VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ',  # Verb
                 'JJ', 'JJR', 'JJS',  # Adjective
                 'RB', 'RBR', 'RBS'}  # Adverb
 
-
-'''
-Notice we use only lemma word of the form,
-using word form but counting by lemmas gives nteresting reults (i think better)
-This requires changing word_counts to {lemma_word:{form1:count_form1, form2:count_form2}}
-and printing all word forms when sum of lemma words are above word_min_num
-'''
 word_counts = Counter()
 
 def all_sentence_parse(input_data, output_file):
@@ -24,7 +17,6 @@ def all_sentence_parse(input_data, output_file):
     :param output_file:
     :return:
     """
-
     with open(input_data, 'r') as f_in:
         with open(output_file, 'w') as f_out:
             file_lines = f_in.readlines()
@@ -122,7 +114,6 @@ def window_parse(input_data, output_file):
                             f_out.write(string2file3)
                             f_out.write(string2file4)
                 else:  # move to the next word
-                    start_line = file_line_i+1
                     line_words = set()
 
 
@@ -192,7 +183,4 @@ if __name__ == '__main__':
                 f.write("%s %d\n" % (w, count))
 
     print(datetime.datetime.now())
-
-
-
 

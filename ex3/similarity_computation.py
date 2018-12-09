@@ -9,6 +9,7 @@ p_word_dict = {}
 p_att_dict = {}
 p_word_att_dict = {}
 
+
 def safe_div(x,y):
     if y == 0:
         return 0
@@ -26,6 +27,7 @@ def PMI(u_att_count, u_att_total_count, u_count, u_total_count, att_count, att_t
     pmi = np.max((0, cond_pmi))
 
     return pmi, p_u_att, p_u, p_att
+
 
 def getGood(good_words_file):
     good_dict = Counter()
@@ -79,8 +81,6 @@ def loadData(data_file_name, good_words_file):
     total_context_count = sum(total_context_occurrence_count.values())
     total_word_context_count = sum([sum(main_dict[x].values()) for x in main_dict])
 
-    #print "avg num of feat: " + str(np.average([len((main_dict[x]) for x in main_dict)]))
-
     for word in main_dict:
         total_PMI = 0
         all_word_context = main_dict[word]
@@ -119,7 +119,6 @@ def findSimilar(u, main_dict, attribute_dict, num_of_words):
 
         u_attributes = main_dict[u]
         for att in u_attributes:
-            #print att
             for word in attribute_dict[att]:
                 word_attributes = main_dict[word]
                 if att in word_attributes:
@@ -142,12 +141,9 @@ def find_highest_contexts(target_word, main_dict, max_attributes):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        data_file_name = sys.argv[1]
-        good_words_file = sys.argv[2]
-    else:
-        data_file_name = 'data/huge_sorted_window'
-        good_words_file = 'data/huge_good_words_window'
+
+    data_file_name = sys.argv[1]
+    good_words_file = sys.argv[2]
 
     main_dict, attribute_dict = loadData(data_file_name, good_words_file)
 
@@ -157,7 +153,6 @@ if __name__ == '__main__':
         print "----close words:"
         for i, w in enumerate(similar_words):
             print("%s" % (w))
-            #print("----close word no %d: %s" % (i, w))
 
         highest_contexts = find_highest_contexts(target_word, main_dict, 21)
         print"----context"

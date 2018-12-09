@@ -1,0 +1,41 @@
+=====================================================================
+This file describes how to run the Similarity Computation & Word2Vec.
+=====================================================================
+
+-----------------------
+Similarity Computation:
+-----------------------
+Motivation:
+    1.  Start with parsing the data:
+        1.1 Convert the 'wikipedia trees lemmatized' to 2 files.
+            file1: pairs of 'word attribute'
+            file2: words (that appeared over some threshold) and their count of appearance.
+        1.2 Sort file1 and write it to file3, the result is triples of 'word attribute count_of_appearance'
+            The triples that written will be obly the ones that appeared over some threshold.
+    2.  Run the 'similarity_computation' script that gets file3, file2, type of similarity (sentence, window, dependency),
+        and print the 20 most closed words and contexts.
+
+Command Line:
+    1.
+        1.1 python init_parse.py <parse_type> <input_data> <output_pairs_data> <output_word_data> <word_appearance_threshold>
+            For example: $python init_parse.py window wikipedia.sample.trees.lemmatized data_parsed data_words 100
+            (Where <parse_type> can be ['all', 'window', 'dep'])
+        1.2 sh count_and_sort_filter.sh <input_parsed_data> <pairs_threshold> <output_triples_data>
+            For example: sh count_and_sort_filter.sh data_parsed 5 data_sorted
+    2.  python similarity_computation.py <output_triples_data> <output_word_data>
+        For example: python similarity_computation.py data_sorted data_words
+
+
+---------
+Word2Vec:
+---------
+Required library...: 'prettytable'
+Why................: nice printing of results.
+How................: 'pip install prettytable'
+
+Command Line:
+    python close_words.py <bow5_words_data> <deps_words_data> <bow5_contexts_data>  <deps_contexts_data>
+
+This program write the outputs to 2 files:
+    1. 'word2vec_closets_words'
+    2. 'word2vec_strongest_contexts'

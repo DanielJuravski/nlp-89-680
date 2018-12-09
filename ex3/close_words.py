@@ -1,5 +1,6 @@
 import io
 import numpy as np
+import sys
 from prettytable import PrettyTable
 
 
@@ -56,30 +57,29 @@ def print_tables(results_dicts_arr, out_path, rows_amount):
     f.write(t.get_string())
 
 
-
-
-
 if __name__ == '__main__':
-    bow5_words_vectors, bow5_words_titles = load_vectors("data/bow5.words")
+    bow5_words_data = sys.argv[1]
+    deps_words_data = sys.argv[2]
+    bow5_contexts_data = sys.argv[3]
+    deps_contexts_data = sys.argv[4]
+
+    bow5_words_vectors, bow5_words_titles = load_vectors(bow5_words_data)
     close_words_bow5 = get_close_words((bow5_words_vectors, bow5_words_titles),
                                        (bow5_words_vectors, bow5_words_titles), 20)
 
-    dep_words_vectors, dep_words_titles = load_vectors("data/deps.words")
+    dep_words_vectors, dep_words_titles = load_vectors(deps_words_data)
     close_words_deps = get_close_words((dep_words_vectors, dep_words_titles),
                                        (dep_words_vectors, dep_words_titles), 20)
 
     dicts = [("bow5", close_words_bow5), ("dep", close_words_deps)]
     print_tables(dicts, "word2vec_closets_words", 20)
 
-    bow5_context_vectors, bow5_context_titles = load_vectors("data/bow5.contexts")
+    bow5_context_vectors, bow5_context_titles = load_vectors(bow5_contexts_data)
     contexts_bow5 = get_close_words((bow5_words_vectors, bow5_words_titles),
                                     (bow5_context_vectors, bow5_context_titles), 10)
-    dep_context_vectors, dep_context_titles = load_vectors("data/deps.contexts")
+    dep_context_vectors, dep_context_titles = load_vectors(deps_contexts_data)
     contexts_deps = get_close_words((dep_words_vectors, dep_words_titles),
                                     (dep_context_vectors, dep_context_titles), 10)
     dicts_contexts = [("bow5-contexts", contexts_bow5), ("dep-contexts", contexts_deps)]
     print_tables(dicts_contexts, "word2vec_strongest_contexts", 10)
-
-
-
 
