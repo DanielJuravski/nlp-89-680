@@ -2,8 +2,7 @@
 | word\type |      bow5     |       dep        |
 +-----------+---------------+------------------+
 |    ---    |      ---      |       ---        |
-|    car    |      car      |       car        |
-|           |      cars     |      truck       |
+|    car    |      cars     |      truck       |
 |           |     truck     |       suv        |
 |           |   automobile  |     vehicle      |
 |           |    vehicle    |     minivan      |
@@ -22,9 +21,9 @@
 |           | mercedes-benz |    motorhome     |
 |           |      bike     |     taxicab      |
 |           |  rear-engined |     roadster     |
+|           | three-wheeled |      wagon       |
 |    ---    |      ---      |       ---        |
-|    bus    |      bus      |       bus        |
-|           |     buses     |     minibus      |
+|    bus    |     buses     |     minibus      |
 |           |      tram     |       tram       |
 |           |    metrobus   |      buses       |
 |           |   intercity   |     jeepney      |
@@ -43,9 +42,9 @@
 |           |      rail     |     railcar      |
 |           |    transit    |    railmotor     |
 |           |   trolleybus  | intercityexpress |
+|           |  limited-stop |      train       |
 |    ---    |      ---      |       ---        |
-|  hospital |    hospital   |     hospital     |
-|           |     clinic    |    sanatorium    |
+|  hospital |     clinic    |    sanatorium    |
 |           |   hospitals   |     hospice      |
 |           |   infirmary   |    sanitorium    |
 |           |    hospice    |    hospitals     |
@@ -64,9 +63,9 @@
 |           |   in-patient  |     heliport     |
 |           |   incurables  |       gaol       |
 |           |  orthopaedic  |    guesthouse    |
+|           |    westmead   |   motherhouse    |
 |    ---    |      ---      |       ---        |
-|   hotel   |     hotel     |      hotel       |
-|           |     motel     |      motel       |
+|   hotel   |     motel     |      motel       |
 |           |   restaurant  |      hotels      |
 |           |   doubletree  |      casino      |
 |           |    sheraton   |    restaurant    |
@@ -85,9 +84,9 @@
 |           |    boutique   |     brewpub      |
 |           |   nightclub   |     sheraton     |
 |           |    marriott   |    steakhouse    |
+|           |   travelodge  |    brasserie     |
 |    ---    |      ---      |       ---        |
-|    gun    |      gun      |       gun        |
-|           |      guns     |       guns       |
+|    gun    |      guns     |       guns       |
 |           |     cannon    |     handgun      |
 |           |    howitzer   |    machinegun    |
 |           |  sub-machine  |     howitzer     |
@@ -106,9 +105,9 @@
 |           |     rifle     |   machine-gun    |
 |           |      88mm     |      weapon      |
 |           | large-caliber |    carronade     |
+|           |  autocannons  |     pounder      |
 |    ---    |      ---      |       ---        |
-|    bomb   |      bomb     |       bomb       |
-|           |     bombs     |      bombs       |
+|    bomb   |     bombs     |      bombs       |
 |           |   detonated   |     firebomb     |
 |           |   detonates   |     landmine     |
 |           |    detonate   |     car-bomb     |
@@ -127,9 +126,9 @@
 |           |  detonations  |    explosives    |
 |           |    landmine   |    machinegun    |
 |           |    tallboy    |      a-bomb      |
+|           | thermonuclear |    firebombs     |
 |    ---    |      ---      |       ---        |
-|   horse   |     horse     |      horse       |
-|           |     horses    |      horses      |
+|   horse   |     horses    |      horses      |
 |           |  standardbred |       goat       |
 |           |   saddlebred  |       dog        |
 |           |    gelding    |     stallion     |
@@ -148,9 +147,9 @@
 |           |   appaloosa   |    sidesaddle    |
 |           |     sulky     |    racehorse     |
 |           |   racehorse   |     elephant     |
+|           |   greyhound   |       pony       |
 |    ---    |      ---      |       ---        |
-|    fox    |      fox      |       fox        |
-|           |      abc      |     daystar      |
+|    fox    |      abc      |     daystar      |
 |           |      cbs      |       nbc        |
 |           |      nbc      |      byutv       |
 |           |    wxyz-tv    |       kron       |
@@ -169,9 +168,9 @@
 |           |      nesn     |     cinemax      |
 |           |      wesh     |       wdiv       |
 |           |       wb      |     mundofox     |
+|           |     wgn-tv    |      coyote      |
 |    ---    |      ---      |       ---        |
-|   table   |     table     |      table       |
-|           |     tables    |      tables      |
+|   table   |     tables    |      tables      |
 |           |    sortable   |   leaderboard    |
 |           |   wikitable   |    sideboard     |
 |           |    look-up    |    chessboard    |
@@ -190,9 +189,9 @@
 |           |     footer    |    letterbox     |
 |           |    tabular    |    windowsill    |
 |           |      menu     |     bookcase     |
+|           |     carom     |    wikitable     |
 |    ---    |      ---      |       ---        |
-|    bowl   |      bowl     |       bowl       |
-|           |     xliii     |      bowls       |
+|    bowl   |     xliii     |      bowls       |
 |           |      xlii     |    superbowl     |
 |           |      xliv     |    arenabowl     |
 |           |     bowls     |       wcws       |
@@ -211,9 +210,9 @@
 |           |     gator     |       cup        |
 |           |     xxviii    |    kvalserien    |
 |           |     xxxii     |     tourney      |
+|           |      xxxi     |       cws        |
 |    ---    |      ---      |       ---        |
-|   guitar  |     guitar    |      guitar      |
-|           |   harmonica   |    saxophone     |
+|   guitar  |   harmonica   |    saxophone     |
 |           |    mandolin   |       bass       |
 |           |      bass     |     mandolin     |
 |           |     drums     |    harmonica     |
@@ -232,9 +231,9 @@
 |           |   vibraphone  |      sitar       |
 |           |   tambourine  |      fiddle      |
 |           |     vocals    |      drums       |
+|           |    fretless   |     marimba      |
 |    ---    |      ---      |       ---        |
-|   piano   |     piano     |      piano       |
-|           |     violin    |      violin      |
+|   piano   |     violin    |      violin      |
 |           |     cello     |      cello       |
 |           |  harpsichord  |   harpsichord    |
 |           |    clarinet   |    saxophone     |
@@ -253,4 +252,5 @@
 |           |    mandolin   |    harmonica     |
 |           |   pianoforte  |     clavinet     |
 |           |   vibraphone  |    clavichord    |
+|           |   concertos   |    euphonium     |
 +-----------+---------------+------------------+

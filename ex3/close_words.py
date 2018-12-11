@@ -7,7 +7,8 @@ from prettytable import PrettyTable
 TARGET_WORDS = ["car", "bus", "hospital", "hotel", "gun", "bomb", "horse", "fox", "table", "bowl", "guitar", "piano"]
 
 
-def get_close_words(words_matrix, context_matrix, num):
+def get_close_words(words_matrix, context_matrix, num, remove_first=False):
+    start_index = -2 if remove_first else -1
     W, words = words_matrix
     contextW, context_titles = context_matrix
     results = {}
@@ -15,7 +16,7 @@ def get_close_words(words_matrix, context_matrix, num):
     for target_word in TARGET_WORDS:
         v = W[w2i[target_word]]
         dot_products = contextW.dot(v)
-        most_similar_ids = dot_products.argsort()[-1:-(num+1):-1]
+        most_similar_ids = dot_products.argsort()[start_index:-(num+2):-1]
         similar_results = context_titles[most_similar_ids]
         results[target_word] = similar_results
 
@@ -65,11 +66,12 @@ if __name__ == '__main__':
 
     bow5_words_vectors, bow5_words_titles = load_vectors(bow5_words_data)
     close_words_bow5 = get_close_words((bow5_words_vectors, bow5_words_titles),
-                                       (bow5_words_vectors, bow5_words_titles), 20)
+                                       (bow5_words_vectors, bow5_words_titles), 20, True)
+
 
     dep_words_vectors, dep_words_titles = load_vectors(deps_words_data)
     close_words_deps = get_close_words((dep_words_vectors, dep_words_titles),
-                                       (dep_words_vectors, dep_words_titles), 20)
+                                       (dep_words_vectors, dep_words_titles), 20, True)
 
     dicts = [("bow5", close_words_bow5), ("dep", close_words_deps)]
     print_tables(dicts, "word2vec_closets_words", 20)

@@ -1,7 +1,10 @@
 import sys
 from collections import Counter
+
+import datetime
 import numpy as np
 import operator
+from close_words import print_tables
 
 TARGET_WORDS = ["car", "bus", "hospital", "hotel", "gun", "bomb", "horse", "fox", "table", "bowl", "guitar", "piano"]
 
@@ -9,6 +12,7 @@ p_word_dict = {}
 p_att_dict = {}
 p_word_att_dict = {}
 
+SMOOTHING_FACTOR = 1
 
 def safe_div(x,y):
     if y == 0:
@@ -17,9 +21,10 @@ def safe_div(x,y):
 
 
 def PMI(u_att_count, u_att_total_count, u_count, u_total_count, att_count, att_total_count):
-    p_u_att = safe_div(u_att_count, u_att_total_count)
-    p_u = safe_div(u_count, u_total_count)
-    p_att = safe_div(att_count, att_total_count)
+
+    p_u_att = safe_div(u_att_count**SMOOTHING_FACTOR, u_att_total_count)
+    p_u = safe_div(u_count**SMOOTHING_FACTOR, u_total_count)
+    p_att = safe_div(att_count**SMOOTHING_FACTOR, att_total_count)
 
     cond_pmi = safe_div(p_u_att, (p_u*p_att))
     cond_pmi = np.log(cond_pmi)
@@ -28,8 +33,8 @@ def PMI(u_att_count, u_att_total_count, u_count, u_total_count, att_count, att_t
 
     return pmi, p_u_att, p_u, p_att
 
-
-def getGood(good_words_file):
+#loads the words that passed a threshold
+def get_valid_words(good_words_file):
     good_dict = Counter()
     with open(good_words_file) as f:
         for line in f.readlines():
@@ -51,7 +56,7 @@ def loadData(data_file_name, good_words_file):
     total_word_occurrence_count = Counter()
     total_context_occurrence_count = Counter()
 
-    good_words_dict = getGood(good_words_file)
+    good_words_dict = get_valid_words(good_words_file)
 
     # create main_dict with count values
     with open(data_file_name) as f:
@@ -77,9 +82,13 @@ def loadData(data_file_name, good_words_file):
 
     # set PMI values for the main_dict
     print "Setting PMI values ..."
-    total_words_count = sum(total_word_occurrence_count.values())
-    total_context_count = sum(total_context_occurrence_count.values())
-    total_word_context_count = sum([sum(main_dict[x].values()) for x in main_dict])
+
+    def smooth(arr):
+        return [i**SMOOTHING_FACTOR for i in arr]
+
+    total_words_count = sum(smooth(total_word_occurrence_count.values()))
+    total_context_count = sum(smooth(total_context_occurrence_count.values()))
+    total_word_context_count = sum([sum(smooth(main_dict[x].values())) for x in main_dict])
 
     for word in main_dict:
         total_PMI = 0
@@ -140,23 +149,57 @@ def find_highest_contexts(target_word, main_dict, max_attributes):
         return [x[0] for x in sorted_attributes[:max_attributes]]
 
 
-if __name__ == '__main__':
+def init_global_dicts():
+    global p_word_dict, p_att_dict,p_word_att_dict
+    p_word_dict = {}
+    p_att_dict = {}
+    p_word_att_dict = {}
 
-    data_file_name = sys.argv[1]
-    good_words_file = sys.argv[2]
 
-    main_dict, attribute_dict = loadData(data_file_name, good_words_file)
-
+def get_similarities(data_file_name, valid_words_file):
+    main_dict, attribute_dict = loadData(data_file_name, valid_words_file)
+    similar_words_dict = {}
+    strongest_context_dict = {}
     for target_word in TARGET_WORDS:
         similar_words = findSimilar(target_word, main_dict, attribute_dict, 21)
-        print "target word is: " + target_word
-        print "----close words:"
-        for i, w in enumerate(similar_words):
-            print("%s" % (w))
+        similar_words = similar_words[1:] #remove first word
+        similar_words_dict[target_word] = similar_words
 
         highest_contexts = find_highest_contexts(target_word, main_dict, 21)
-        print"----context"
-        for i, w in enumerate(highest_contexts):
-            print("%s" % (w))
+        strongest_context_dict[target_word] = highest_contexts
+
+    return similar_words_dict, strongest_context_dict
+
+if __name__ == '__main__':
+    num_of_tasks = int(sys.argv[1])
+    expected_arg_num = max([num_of_tasks * 3 + 1, 4])
+    given_arg_num = len(sys.argv) - 1
+    if given_arg_num != expected_arg_num:
+        print("missing arguments, given: %d expected: %d" %(given_arg_num, expected_arg_num))
+        print ("expected format\n: "
+               "arg1=Ntasks, arg2=task1-name, arg3=task1-context-counts, arg4=task1-valid-words ...")
+        exit(1)
+
+    word_all_dicts = []
+    context_all_dicts = []
+    for i in range(num_of_tasks):
+        init_global_dicts()
+        base = (i * 3) + 1
+        task_name = sys.argv[base+1]
+        data_file_name = sys.argv[base+2]
+        valid_words_file = sys.argv[base+3]
+
+        time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print("started task %s at %s\n" %( task_name, time))
+
+        get_similarities(data_file_name, valid_words_file)
+        words_dict, contexts_dict = get_similarities(data_file_name, valid_words_file)
+        word_all_dicts.append((task_name, words_dict))
+        context_all_dicts.append((task_name, contexts_dict))
 
 
+    print_tables(word_all_dicts, "word_similarities", 20)
+    print_tables(context_all_dicts, "strong_contexts", 20)
+
+    time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print("all completed at %s\n" % time)

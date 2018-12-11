@@ -136,22 +136,21 @@ def dependency_parse(input_data, output_file):
                         head_tag = sentence_lines[head-1][4]
                         head_word = sentence_lines[head - 1][2]
                         deprel = line_fields[7]
-                        if word_tag in CONTEXT_TEGSET:
-                            if head != 0:  # ROOT
-                                word_counts[word] += 1
-                                att1 = head_word + "|" + deprel + "|<"  # < is relation direction
-                                att2 = word + "|" + deprel + "|>"  # < is relation direction
+                        if head != 0:  # ROOT
+                            word_counts[word] += 1
+                            att1 = head_word + "|" + deprel + "|<"  # < is relation direction
+                            att2 = word + "|" + deprel + "|>"  # < is relation direction
+                            # we add all contexts to word
+                            this_line_word_context.append((word, att1))
+                            this_line_word_context.append((head_word, att2))
+                            if head_tag == 'IN':
+                                head_head_ID = int(sentence_lines[head - 1][6])
+                                head_head_word = sentence_lines[head_head_ID-1][2]
+                                att1 = head_head_word + "|" + deprel + "|" + head_word + "|<"
+                                att2 = word + "|" + deprel + "|" + head_word + "|>"
                                 # we add all contexts to word
                                 this_line_word_context.append((word, att1))
-                                this_line_word_context.append((head_word, att2))
-                                if head_tag == 'IN':
-                                    head_head_ID = int(sentence_lines[head - 1][6])
-                                    head_head_word = sentence_lines[head_head_ID-1][2]
-                                    att1 = head_head_word + "|" + deprel + "|" + head_word + "|<"
-                                    att2 = word + "|" + deprel + "|" + head_word + "|>"
-                                    # we add all contexts to word
-                                    this_line_word_context.append((word, att1))
-                                    this_line_word_context.append((head_head_word, att2))
+                                this_line_word_context.append((head_head_word, att2))
 
 
                     # finished processing sentence
