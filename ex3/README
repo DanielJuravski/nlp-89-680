@@ -19,6 +19,8 @@ Motivation:
             The triples that written will be only the ones that appeared over specified threshold.
     2.  Run the 'similarity_computation.py' script that gets file3, file2, type of co-occurrence (sentence, window, dependency),
         and print the 20 closest words and 20 top contexts.
+        The script can run for one of this tasks at a time or several tasks, outputting all results to same table at the
+        current folder path.
 
 Command Line:
     1.
@@ -27,8 +29,10 @@ Command Line:
             (Where <parse_type> can be ['all', 'window', 'dep'])
         1.2 sh count_and_sort_filter.sh <input_parsed_file> <pairs_threshold> <output_triples_file>
             For example: sh count_and_sort_filter.sh data_parsed 5 data_sorted
-    2.  python similarity_computation.py <output_triples_file> <output_word_file>
-        For example: python similarity_computation.py data_sorted data_words
+    2.  python similarity_computation.py <number_of_tasks> <task1_name> <task1_output_triples_file> <task1_output_word_file>...
+        For example:
+        option 1) 'python similarity_computation.py 1 window window_sorted window_words
+        option 2) 'python similarity_computation.py 3 dependency dep_sorted dep_words sentence sentence_sorted sentence_words window window_sorted window_words
 
 
 ---------
