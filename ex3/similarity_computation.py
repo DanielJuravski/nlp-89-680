@@ -79,6 +79,11 @@ def loadData(data_file_name, good_words_file):
                     attribute_dict[curr_context] = context_set
 
     print ('Number of words in main_dict: ' + str(len(main_dict)))
+    print ('Number of context words context dict: ' + str(len(attribute_dict)))
+    words_features_amount = [len(x) for x in main_dict.values()]
+    print("max features per word: %d" % max(words_features_amount))
+    print("min features per word: %d" % min(words_features_amount))
+    print("avg features per word: %d" % (sum(words_features_amount)/len(words_features_amount)))
 
     # set PMI values for the main_dict
     print "Setting PMI values ..."
@@ -87,7 +92,9 @@ def loadData(data_file_name, good_words_file):
         return [i**SMOOTHING_FACTOR for i in arr]
 
     total_words_count = sum(smooth(total_word_occurrence_count.values()))
+    print("total words count %d\n" % total_words_count)
     total_context_count = sum(smooth(total_context_occurrence_count.values()))
+    print("total context count %d\n" % total_context_count)
     total_word_context_count = sum([sum(smooth(main_dict[x].values())) for x in main_dict])
 
     for word in main_dict:
@@ -123,9 +130,7 @@ def loadData(data_file_name, good_words_file):
 
 def findSimilar(u, main_dict, attribute_dict, num_of_words):
     if u in main_dict:
-        print "Word '" + u + "' found in main_dict ..."
         DT = Counter()
-
         u_attributes = main_dict[u]
         for att in u_attributes:
             for word in attribute_dict[att]:
