@@ -60,7 +60,6 @@ def loadData(data_file_name, good_words_file):
 
     # create main_dict with count values
     with open(data_file_name) as f:
-        print "Creating main_dict ..."
         for line in f.readlines():
             curr_word, curr_context, word_context_count = line.split()
             word_context_count = int(word_context_count)
@@ -148,7 +147,6 @@ def findSimilar(u, main_dict, attribute_dict, num_of_words):
 
 def find_highest_contexts(target_word, main_dict, max_attributes):
     if target_word in main_dict:
-        print "Word '" + target_word + "' found in main_dict ..."
         target_word_attributes = main_dict[target_word]
         sorted_attributes = sorted(target_word_attributes.items(), key=operator.itemgetter(1), reverse=True)
         return [x[0] for x in sorted_attributes[:max_attributes]]
