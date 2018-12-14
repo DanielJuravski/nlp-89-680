@@ -174,31 +174,20 @@ def get_similarities(data_file_name, valid_words_file):
     return similar_words_dict, strongest_context_dict
 
 if __name__ == '__main__':
-    num_of_tasks = int(sys.argv[1])
-    expected_arg_num = max([num_of_tasks * 3 + 1, 4])
-    given_arg_num = len(sys.argv) - 1
-    if given_arg_num != expected_arg_num:
-        print("missing arguments, given: %d expected: %d" %(given_arg_num, expected_arg_num))
-        print ("expected format\n: "
-               "arg1=Ntasks, arg2=task1-name, arg3=task1-context-counts, arg4=task1-valid-words ...")
-        exit(1)
-
     word_all_dicts = []
     context_all_dicts = []
-    for i in range(num_of_tasks):
-        init_global_dicts()
-        base = (i * 3) + 1
-        task_name = sys.argv[base+1]
-        data_file_name = sys.argv[base+2]
-        valid_words_file = sys.argv[base+3]
 
-        time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print("started task %s at %s\n" %( task_name, time))
+    data_file_name = sys.argv[1]
+    valid_words_file = sys.argv[2]
 
-        get_similarities(data_file_name, valid_words_file)
-        words_dict, contexts_dict = get_similarities(data_file_name, valid_words_file)
-        word_all_dicts.append((task_name, words_dict))
-        context_all_dicts.append((task_name, contexts_dict))
+    time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print("Started at %s\n" %(time))
+
+    get_similarities(data_file_name, valid_words_file)
+    words_dict, contexts_dict = get_similarities(data_file_name, valid_words_file)
+
+    word_all_dicts.append(("Closest word:", words_dict))
+    context_all_dicts.append(("Closest context:", contexts_dict))
 
 
     print_tables(word_all_dicts, "word_similarities", 20)

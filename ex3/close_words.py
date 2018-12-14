@@ -47,7 +47,7 @@ def load_vectors(file_path):
 
 def print_tables(results_dicts_arr, out_path, rows_amount):
     f = io.open(out_path, 'w', encoding='utf8')
-    headers=["word\\type"] + [x[0] for x in results_dicts_arr]
+    headers=["Target:"] + [x[0] for x in results_dicts_arr]
     t = PrettyTable(headers)
     for w in TARGET_WORDS:
         t.add_row(["---"] + ["---" for x in results_dicts_arr])
