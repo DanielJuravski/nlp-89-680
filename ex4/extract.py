@@ -10,10 +10,10 @@ def extract_by_NER(sen):
     for ent in sen.doc.ents:
         if ent.label_ == 'PERSON':
             persons.append((ent.text, ent))
-        elif ent.label_ == 'GPE':
+        elif ent.label_ == 'GPE' or ent.label_ == 'NORP':
             geos.append((ent.text, ent))
 
-    persons = filter_persons_by_compnoun(persons, sen)
+    # persons = filter_persons_by_compnoun(persons, sen)
 
     for person in persons:
         for geo in geos:
@@ -78,7 +78,7 @@ def extract_from_sentences(data):
     for sen_id in sorted_sen_ids:
         sen = data[sen_id]
         sen_relations = extract_by_NER(sen)
-        sen_relations = filter_by_dep_tree_via_verb(sen_relations, sen)
+        # sen_relations = filter_by_dep_tree_via_verb(sen_relations, sen)
         if len(sen_relations) > 0:
             print sen_id
             for token in sen.doc:
