@@ -7,6 +7,16 @@ def extract_by_NER(sen):
     persons = []
     geos = []
 
+    p = []
+    g = []
+
+    for word in sen:
+        if word.ent_type_ == 'PERSON':
+            p.append(word)
+        elif word.ent_type_ == 'GPE' or word.ent_type_ == 'NORP':
+            g.append(word)
+
+
     for ent in sen.doc.ents:
         if ent.label_ == 'PERSON':
             persons.append((ent.text, ent))
@@ -83,11 +93,22 @@ def extract_from_sentences(data):
             print sen_id
             for token in sen.doc:
                 print(token.text, token.dep_, token.head.text, token.head.pos_, [child for child in token.children])
-        relations[sen_id] = [(r[0][0], r[1][0]) for r in sen_relations]
+        relations[sen_id] = clean_relations(sen_relations)
 
     return relations
 
 
+def clean_relations(sen_relations):
+    clean = []
+    for relation in sen_relations:
+        person = relation[0][0]
+        person_entity = relation[0][1]
+        for c in person_entity.root.children:
+            print c
+
+        place = relation[1][0]
+        clean.append((person, place))
+    return clean
 
 
 if __name__ == '__main__':
