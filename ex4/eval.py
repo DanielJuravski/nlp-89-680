@@ -101,7 +101,10 @@ def print_stats(TP, FP, FN):
 
     precision = TP / (TP + FP)
     recall = TP / (TP + FN)
-    f1 = 2 * (recall * precision) / (recall + precision)
+    if (recall + precision) > 0:
+        f1 = 2 * (recall * precision) / (recall + precision)
+    else:
+        f1 = 0
 
     print
     print ("Precision = %.4f%%" % (precision * 100))
@@ -121,6 +124,7 @@ def write2file(sentences, file_name):
             for sent in sentences:
                 sent_id = sent.split()[0]
                 if sent_id == sorted_sent_id:
+                    sentences.remove(sent)
                     f.write(sent)
                     break
 
@@ -129,7 +133,6 @@ def write_stat2file(TP_sents, FP_sents, FN_sents):
     write2file(TP_sents, 'statistics/TP.txt')
     write2file(FP_sents, 'statistics/FP.txt')
     write2file(FN_sents, 'statistics/FN.txt')
-
 
 
 if __name__ == '__main__':
