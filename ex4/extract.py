@@ -66,7 +66,6 @@ def filter_by_dep_tree_via_verb(sen_relations, sen):
             uphill_child = head
             head = head.head
 
-
         if found:
             filtered.append(relation)
 
