@@ -2,7 +2,14 @@ import codecs
 import spacy
 import sys
 
+
 SENT_PREFIX="sent"
+
+OUR_RE = 'Live_In'
+NER1 = 0
+RE = 1
+NER2 = 2
+
 nlp = spacy.load('en')
 
 def read_lines(fname):
