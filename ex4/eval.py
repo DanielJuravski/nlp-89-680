@@ -21,17 +21,19 @@ def get_annotation_data(annotation_file, gold):
             line_arr.append(ner2)
             line_arr.append(sen)
             # check if that NER1 RE NER2 already exist
-            # if all_lines.has_key(sen_id):
-            #     all_id_relations = all_lines[sen_id]
-            #     for line_i in all_id_relations:
-            #         if line_i == line_arr:
-            #             break
-            #         else:
-            #             all_lines[sen_id].append(line_arr)
-            #             break
-            # else:
-            #     all_lines[sen_id].append(line_arr)
-            all_lines[sen_id].append(line_arr)
+            if gold:
+                if all_lines.has_key(sen_id):
+                    all_id_relations = all_lines.get(sen_id)
+                    for line_i in all_id_relations:
+                        if line_i == line_arr:
+                            break
+                        else:
+                            all_lines[sen_id].append(line_arr)
+                            break
+                else:
+                    all_lines[sen_id].append(line_arr)
+            else:
+                all_lines[sen_id].append(line_arr)
     return all_lines
 
 
