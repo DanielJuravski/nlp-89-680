@@ -1,11 +1,8 @@
 import sys
 from collections import defaultdict
-import copy
-import collections
-
 
 import utils
-
+from utils import are_similar
 
 
 def get_annotation_data(annotation_file, gold):
@@ -45,7 +42,7 @@ def compare_values(sen_id, gold_values, pred_values):
 
     for pred_val in pred_values:
         for gold_val in gold_values:
-            if are_similar(gold_val[utils.NER1],pred_val[utils.NER1]) and \
+            if are_similar(gold_val[utils.NER1], pred_val[utils.NER1]) and \
                     are_similar(gold_val[utils.RE], pred_val[utils.RE]) and \
                     are_similar(gold_val[utils.NER2], pred_val[utils.NER2]):
                 TP += 1
@@ -66,10 +63,6 @@ def compare_values(sen_id, gold_values, pred_values):
 
     return TP, FP, TP_sent, FP_sent
 
-
-def are_similar(gold_val, pred_val):
-    # return gold_val == pred_val
-    return (gold_val in pred_val) or (pred_val in gold_val)
 
 def get_stat(gold_annotation_data, pred_annotation_data):
     TP = FP = FN = 0.0

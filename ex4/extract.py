@@ -1,121 +1,41 @@
+import pickle
 import sys
-import utils
-
-
-def extract_by_NER(sen):
-    relations = []
-    persons = []
-    geos = []
-
-    p = []
-    g = []
-
-    for word in sen:
-        if word.ent_type_ == 'PERSON':
-            p.append(word)
-        elif word.ent_type_ == 'GPE' or word.ent_type_ == 'NORP':
-            g.append(word)
-
-
-    for ent in sen.doc.ents:
-        if ent.label_ == 'PERSON':
-            persons.append((ent.text, ent))
-        elif ent.label_ == 'GPE' or ent.label_ == 'NORP':
-            geos.append((ent.text, ent))
-
-    # persons = filter_persons_by_compnoun(persons, sen)
-
-    for person in persons:
-        for geo in geos:
-            relations.append((person, geo))
-
-
-    return relations
-
-
-def filter_persons_by_compnoun(persons, sen):
-    for token in sen.doc:
-        # print(token.text, token.dep_, token.head.text, token.head.pos_, [child for child in token.children])
-        if token.dep_ == 'compound' and token.head.pos_ == 'NOUN':
-            for p in persons:
-                if p[0] == token.text:
-                    persons.remove(p)
-    return persons
-
-
-def check_pos_in_children(head, uphill_child, geo_entity):
-    if head == geo_entity.root:
-        return True
-
-    found = False
-    for child in head.children:
-        if child != uphill_child:
-            found = found or check_pos_in_children(child, uphill_child, geo_entity)
-
-    return found
-
-
-def filter_by_dep_tree_via_verb(sen_relations, sen):
-    filtered = []
-    found = False
-    for relation in sen_relations:
-        per_entity = relation[0][1]
-        geo_entity = relation[1][1]
-        head = per_entity.root.head
-        uphill_child = per_entity.root
-        print(head.text)
-        while uphill_child != head:
-            print ("###head###")
-            print(head.text)
-            if head.pos_ == 'VERB':
-                found = found or check_pos_in_children(head, uphill_child, geo_entity)
-            print ("###children###")
-            for child in head.children:
-                print child.text
-
-            uphill_child = head
-            head = head.head
-
-        if found:
-            filtered.append(relation)
-
-    return filtered
-
-
-def extract_from_sentences(data):
-    relations = {}
-    sorted_sen_ids = utils.get_sorted_ids(data.keys())
-    for sen_id in sorted_sen_ids:
-        sen = data[sen_id]
-        sen_relations = extract_by_NER(sen)
-        # sen_relations = filter_by_dep_tree_via_verb(sen_relations, sen)
-        if len(sen_relations) > 0:
-            print sen_id
-            for token in sen.doc:
-                print(token.text, token.dep_, token.head.text, token.head.pos_, [child for child in token.children])
-        relations[sen_id] = clean_relations(sen_relations)
-
-    return relations
-
-
-def clean_relations(sen_relations):
-    clean = []
-    for relation in sen_relations:
-        person = relation[0][0]
-        person_entity = relation[0][1]
-        for c in person_entity.root.children:
-            print c
-
-        place = relation[1][0]
-        clean.append((person, place))
-    return clean
-
+import train
+from feature_extractor import FeatureExtractor
+import numpy as np
+from utils import load
 
 if __name__ == '__main__':
+    model_file = "model.pkl"
+    features_file = "features.pkl"
+    features_hasher_file = "features_hasher.pkl"
+
     input_file = sys.argv[1]
     output_file = sys.argv[2]
-    data = {}
-    for sen_id, sen in utils.read_lines(sys.argv[1]):
-        data[sen_id] = utils.nlp(sen)
-    relations = extract_from_sentences(data)
-    utils.print_relations(relations, data, output_file)
+    if "--model" in sys.argv:
+        model_arg = sys.argv.index("--model")
+        model_file = sys.argv[model_arg+1]
+    if "--features" in sys.argv:
+        features_arg = sys.argv.index("--features")
+        features_file = sys.argv[features_arg+1]
+    if "--feature_hasher" in sys.argv:
+        feature_hasher_arg = sys.argv.index("--feature_hasher")
+        features_hasher_file = sys.argv[feature_hasher_arg+1]
+
+    clf = load(model_file)
+    feature_set = load(features_file)
+    feature_hasher = load(features_hasher_file)
+    if not train.check_file(input_file):
+        print "file is in wrong format. expected proccessed file"
+
+    feature_extractor = FeatureExtractor(feature_hasher, feature_set)
+    sentences = train.load_processed_sentences(input_file)
+    sen_entities_with_x = train.get_x_data(feature_extractor, sentences)
+    allx = np.array([x[3].toarray()[0] for x in sen_entities_with_x])
+    train_pred = clf.predict(allx)
+    counter = 0
+    for i,p in enumerate(train_pred):
+        if p==1:
+            print (str(counter) +": "+ str(sen_entities_with_x[i][:3]))
+            counter += 1
+

@@ -1,4 +1,6 @@
 import codecs
+
+import pickle
 import spacy
 import sys
 
@@ -36,3 +38,17 @@ def print_relations(relations, full_data, out_f):
 def get_sorted_ids(sen_str_ids):
     sorted_ids =  sorted([int(key[len(SENT_PREFIX):]) for key in sen_str_ids])
     return [SENT_PREFIX + str(sen_id) for sen_id in sorted_ids]
+
+
+def are_similar(gold_val, pred_val):
+    # return gold_val == pred_val
+    return (gold_val in pred_val) or (pred_val in gold_val)
+
+def load(file):
+    with open(file) as f:
+        obj = pickle.load(f)
+    return obj
+
+def save(obj, file_name):
+    with open(file_name, "w") as f:
+        pickle.dump(obj, f)

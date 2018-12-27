@@ -7,9 +7,19 @@ WORD_FORM_INDEX = 1
 
 
 class FeatureExtractor:
+    def __init__(self, fh=None, fs=None):
+        if fh:
+            self.feature_hasher = fh
+        if fs:
+            self.features_set = fs
+            self.train_mode = False
+        else:
+            self.features_set = set()
 
-    features_set = set()
+    features_set = None
     feature_hasher = None
+    train_mode = True
+    unk = "unk"
 
     def build_x_vectors(self,  ent_couple_objects):
         '''
@@ -17,8 +27,9 @@ class FeatureExtractor:
         :param tuple(sen_id, ent1 name, ent2 name, x)
         :return: tuple(sen_id, ent1 name, ent2 name, x)
         '''
+        if not self.feature_hasher:
+            self.feature_hasher = FeatureHasher(n_features=len(self.features_set), input_type='string')
 
-        self.feature_hasher = FeatureHasher(n_features=len(self.features_set), input_type='string')
         x_data = self.feature_hasher.transform([t[3] for t in ent_couple_objects])
         converted_ent_objects = [(t[0], t[1], t[2], x_data[i]) for i,t in enumerate(ent_couple_objects)]
         return converted_ent_objects, x_data
@@ -43,10 +54,10 @@ class FeatureExtractor:
         concatenated_types = ent1_type + ent2_type
 
         features = []
-        features.append(self.add_feature_and_return("e1_type" + ent1_type))
-        features.append(self.add_feature_and_return("e2_type" + ent2_type))
-        features.append(self.add_feature_and_return("e1_head" + ent1_head))
-        features.append(self.add_feature_and_return("e2_head" + ent2_head))
+        features.append(self.get_feature("e1_type", ent1_type))
+        features.append(self.get_feature("e2_type", ent2_type))
+        features.append(self.get_feature("e1_head", ent1_head))
+        features.append(self.get_feature("e2_head", ent2_head))
 
         e1_clean = self.clean_name(ent1_name)
         e2_clean = self.clean_name(ent2_name)
@@ -81,9 +92,17 @@ class FeatureExtractor:
     def clean_name(self, name):
         return name
 
-    def add_feature_and_return(self, feature):
-        self.features_set.add(feature)
-        return feature
+    def get_feature(self, feature_prefix, feature_val):
+        feature = feature_prefix+feature_val
+        if self.train_mode:
+            self.features_set.add(feature)
+            self.features_set.add(feature_prefix + self.unk)
+            return feature
+        else:
+            if feature in self.features_set:
+                return feature
+            else:
+                return feature_prefix + self.unk
 
 
 
