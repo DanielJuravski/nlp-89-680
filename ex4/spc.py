@@ -12,7 +12,13 @@ def read_lines(fname):
         sent = sent.replace("-RRB-",")")
         yield sent_id, sent
 
+i_count = 0
 for sent_id, sent_str in read_lines(sys.argv[1]):
+    if i_count > 20:
+        break
+    else:
+        i_count +=1
+
     sent = nlp(sent_str)
     print "#id:",sent_id
     print "#text:",sent.text
@@ -23,11 +29,11 @@ for sent_id, sent_str in read_lines(sys.argv[1]):
             head_id = "0" # root
         print "\t".join([str(word.i+1), word.text, word.lemma_, word.tag_, word.pos_, head_id, word.dep_, word.ent_iob_, word.ent_type_])
     print
-    # print "#", Noun Chunks:
-    # for np in sent.noun_chunks:
-    #    print(np.text, np.root.text, np.root.dep_, np.root.head.text)
-    # print "#", named entities:
-    # for ne in sent.ents:
-    #    print(ne.text, ne.root.ent_type_, ne.root.text, ne.root.dep_, ne.root.head.text)
+    print "#, Noun Chunks:"
+    for np in sent.noun_chunks:
+       print(np.text, np.root.text, np.root.dep_, np.root.head.text)
+    print "#, named entities:"
+    for ne in sent.ents:
+       print(ne.text, ne.root.ent_type_, ne.root.text, ne.root.dep_, ne.root.head.text)
 
 

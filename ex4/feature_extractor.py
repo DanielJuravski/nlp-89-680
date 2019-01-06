@@ -1,4 +1,7 @@
 from sklearn.feature_extraction import DictVectorizer, FeatureHasher
+import spacy_parser as parser
+from spacy_parser import ENT_OBJ_SPACY_ENT, ENT_OBJ_LABEL, ENT_OBJ_TEXT, ENT_OBJ_ROOT
+from Lexicon_helper import Lexicon_helper
 
 ROW_ID_INDEX = 0
 HEAD_INDEX = 5
@@ -15,6 +18,8 @@ class FeatureExtractor:
             self.train_mode = False
         else:
             self.features_set = set()
+
+        self.lexicon_helper = Lexicon_helper()
 
     features_set = None
     feature_hasher = None
@@ -42,58 +47,61 @@ class FeatureExtractor:
         :param sentence:
         :return: tuple(sen_id, ent1 name, ent2 name, x)
         '''
-
+        features = []
         sen_id = ent_tuple[0]
-        ent1_name = self.extract_name(ent_tuple[1])
-        ent2_name = self.extract_name(ent_tuple[2])
+        ent1_text = self.extract_text(ent_tuple[1])
+        ent2_text = self.extract_text(ent_tuple[2])
 
+        #Entity features
         ent1_type = self.extract_type(ent_tuple[1])
         ent2_type = self.extract_type(ent_tuple[2])
         ent1_head = self.extract_head(ent_tuple[1])
         ent2_head = self.extract_head(ent_tuple[2])
         concatenated_types = ent1_type + ent2_type
-
-        features = []
         features.append(self.get_feature("e1_type", ent1_type))
         features.append(self.get_feature("e2_type", ent2_type))
         features.append(self.get_feature("e1_head", ent1_head))
         features.append(self.get_feature("e2_head", ent2_head))
+        features.append(self.get_feature("concanated_types", concatenated_types))
 
-        e1_clean = self.clean_name(ent1_name)
-        e2_clean = self.clean_name(ent2_name)
+        #Lexicon Features
+        features.append(self.get_feature("e1_lex_fname", self.lexicon_helper.does_include_first_name(ent1_text)))
+        features.append(self.get_feature("e1_lex_lname", self.lexicon_helper.does_include_last_name(ent1_text)))
+        features.append(self.get_feature("e2_lex_loc", self.lexicon_helper.is_location(ent2_text)))
+
+        #word based features
+        words_between_ents = parser.get_words_between(ent_tuple[1], ent_tuple[2])
+        for word in words_between_ents:
+            features.append(self.get_feature("bow", word))
+
+        features.append(self.get_feature("ent1_bword", ent_tuple[1][ENT_OBJ_ROOT].left_edge.text))
+        features.append(self.get_feature("ent2_aword", ent_tuple[2][ENT_OBJ_ROOT].right_edge.text))
+
+        #syntactic features
+        dependency_path_str = parser.get_dependency_path(ent_tuple[1], ent_tuple[2])
+        features.append((self.get_feature("dep_path", dependency_path_str)))
+
+
+        e1_clean = self.clean_name(ent1_text)
+        e2_clean = self.clean_name(ent2_text)
         return (sen_id, e1_clean, e2_clean, features)
 
-    def extract_name(self, ent_lines_arr):
-        name = ""
-        for line in ent_lines_arr:
-            name += line[WORD_FORM_INDEX] + " "
+    def extract_text(self, ent_obj):
+        return ent_obj[ENT_OBJ_TEXT]
 
-        return name.strip()
-
-    def extract_type(self, ent_lines_arr):
-        return ent_lines_arr[0][NER_TYPE_INDEX]
+    def extract_type(self, ent_obj):
+        return ent_obj[ENT_OBJ_LABEL]
 
 
-    def extract_head(self, ent_lines_arr):
-        head = ent_lines_arr[0][HEAD_INDEX]
-        found_head = False
-        ent_line_i = 0
-        while not found_head:
-            found_head = True
-            for i, line in enumerate(ent_lines_arr):
-                if head == line[ROW_ID_INDEX]:
-                    head = line[HEAD_INDEX]
-                    ent_line_i = i
-                    found_head = False
-
-        return ent_lines_arr[ent_line_i][WORD_FORM_INDEX]
+    def extract_head(self, ent_obj):
+        return ent_obj[ENT_OBJ_ROOT].head.lemma_
 
 
     def clean_name(self, name):
         return name
 
     def get_feature(self, feature_prefix, feature_val):
-        feature = feature_prefix+feature_val
+        feature = feature_prefix+str(feature_val)
         if self.train_mode:
             self.features_set.add(feature)
             self.features_set.add(feature_prefix + self.unk)

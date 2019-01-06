@@ -12,7 +12,7 @@ NER1 = 0
 RE = 1
 NER2 = 2
 
-nlp = spacy.load('en')
+nlp = spacy.load('en_core_web_lg')
 
 def read_lines(fname):
     for line in codecs.open(fname, encoding="utf8"):
@@ -39,10 +39,19 @@ def get_sorted_ids(sen_str_ids):
     sorted_ids =  sorted([int(key[len(SENT_PREFIX):]) for key in sen_str_ids])
     return [SENT_PREFIX + str(sen_id) for sen_id in sorted_ids]
 
+def get_senid_int(sen_entities):
+    return int(sen_entities[0][len(SENT_PREFIX):])
 
 def are_similar(gold_val, pred_val):
-    # return gold_val == pred_val
-    return (gold_val in pred_val) or (pred_val in gold_val)
+    if gold_val == pred_val:
+        return True
+    elif gold_val[-1] == '.' and gold_val[:-1] == pred_val:
+        return True
+    elif pred_val[-1] == '.' and pred_val[:-1] == gold_val:
+        return True
+    else:
+        return False
+    #return (gold_val in pred_val) or (pred_val in gold_val)
 
 def load(file):
     with open(file) as f:

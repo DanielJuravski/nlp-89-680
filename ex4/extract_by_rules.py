@@ -19,7 +19,11 @@ def extract_by_NER(sen):
 
     for ent in sen.doc.ents:
         if ent.label_ == 'PERSON':
-            persons.append((ent.text, ent))
+            if ent.root.left_edge.text in ["Mr.", "Mrs.", "Ms.", "Prince", "Queen", "King", "Sir"]:
+                ent_text = ent.root.left_edge.text + " " + ent.text
+            else:
+                ent_text = ent.text
+            persons.append((ent_text, ent))
         elif ent.label_ == 'GPE' or ent.label_ == 'NORP':
             geos.append((ent.text, ent))
 
