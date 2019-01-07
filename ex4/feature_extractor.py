@@ -62,6 +62,8 @@ class FeatureExtractor:
         features.append(self.get_feature("e2_type", ent2_type))
         features.append(self.get_feature("e1_head", ent1_head))
         features.append(self.get_feature("e2_head", ent2_head))
+        features.append(self.get_feature("e1_root", ent_tuple[1][ENT_OBJ_ROOT].lemma_))
+        features.append(self.get_feature("e2_root", ent_tuple[2][ENT_OBJ_ROOT].lemma_))
         features.append(self.get_feature("concanated_types", concatenated_types))
 
         #Lexicon Features
@@ -77,9 +79,28 @@ class FeatureExtractor:
         features.append(self.get_feature("ent1_bword", ent_tuple[1][ENT_OBJ_ROOT].left_edge.text))
         features.append(self.get_feature("ent2_aword", ent_tuple[2][ENT_OBJ_ROOT].right_edge.text))
 
+
+
         #syntactic features
-        dependency_path_str = parser.get_dependency_path(ent_tuple[1], ent_tuple[2])
-        features.append((self.get_feature("dep_path", dependency_path_str)))
+        features.append(self.get_feature("ent_dist", parser.get_dist(ent_tuple[1], ent_tuple[2])))
+        dependency_path_str = parser.get_dependecy_path_str(ent_tuple[1], ent_tuple[2])
+        features.append(self.get_feature("dep_path", dependency_path_str))
+        dependency_path_pos_str = parser.get_dependecy_path_pos_str(ent_tuple[1], ent_tuple[2])
+        features.append(self.get_feature("dep_pos_path", dependency_path_pos_str))
+
+        #features that decrement f1
+
+        # ent1_to_root, ent2_to_root, joinpoint = parser.get_dependency_path_arr(ent_tuple[1], ent_tuple[2])
+        # for i, w in enumerate(ent1_to_root):
+        #     features.append(self.get_feature("e1_2root_pos_"+str(i), w.pos_))
+        # for i, w in enumerate(ent2_to_root):
+        #     features.append(self.get_feature("e2_2root_pos_"+str(i), w.pos_))
+        # if joinpoint != None:
+        #     features.append(self.get_feature("joinpoint_pos", joinpoint.pos_))
+
+        # features.append(self.get_feature("split_roots", parser.is_split_roots(dependency_path_str)))
+        # features.append(self.get_feature("ent1_ancestor", parser.is_anccestor(dependency_path_str, 1)))
+        # features.append(self.get_feature("ent2_ancestor", parser.is_anccestor(dependency_path_str, 2)))
 
 
         e1_clean = self.clean_name(ent1_text)

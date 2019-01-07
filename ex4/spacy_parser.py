@@ -1,4 +1,5 @@
-
+SPLIT_ROOTS = "root1|root2"
+JOINPOINT = "joinpoint"
 LIVE_IN = "Live_In"
 
 ENT_OBJ_ROOT = "ent_obj_root"
@@ -9,11 +10,19 @@ ENT_OBJ_SPACY_ENT = "ent_obj_spacy_ent"
 PEOPLE_TITLES = ["mr.", "mrs.", "ms.", "prince", "sir", "sultan", "lord"]
 
 
+#Todo move to clean text
 def get_entity_text(text, root):
-    ent_text = text
+    ent_text = text.strip()
     left_edge_word = root.left_edge.text
     if left_edge_word.lower() in PEOPLE_TITLES:
         ent_text = left_edge_word + " " + ent_text
+
+    text_arr = text.split()
+    if text_arr[0].lower() == "the":
+        ent_text = " ".join(text_arr[1:])
+
+    if ent_text[-2:].lower() == "'s":
+        ent_text = ent_text[:-2].strip()
     return ent_text
 
 
@@ -30,6 +39,8 @@ def get_xs_from_sen(sen_id, sen):
         ent_text = get_entity_text(ent.text, ent.root)
         ent_obj = {ENT_OBJ_ROOT: ent.root, ENT_OBJ_TEXT: ent_text, ENT_OBJ_LABEL: ent.label_, ENT_OBJ_SPACY_ENT:ent}
         entities.append(ent_obj)
+
+
 
     for i, ent_i in enumerate(entities):
         for j, ent_j in enumerate(entities):
@@ -69,7 +80,54 @@ def get_words_between(ent1, ent2):
     return words
 
 
-def get_dependency_path(ent1, ent2):
+def is_split_roots(dependency_path_str):
+    return SPLIT_ROOTS in dependency_path_str
+
+
+def is_anccestor(dependency_path_str, ent_number):
+    if ent_number == 1:
+        return dependency_path_str[:len(JOINPOINT)] == JOINPOINT
+    elif ent_number == 2:
+        return dependency_path_str[-len(JOINPOINT):] == JOINPOINT
+    else:
+        raise ValueError('ent_number should be 1 or 2')
+
+def get_dependecy_path_str(ent1, ent2):
+    ent1_to_root, ent2_to_root, join_point = get_dependency_path_arr(ent1, ent2)
+    path = ""
+    for w in ent1_to_root:
+        path += w.dep_ + "<-"
+    if join_point != None:
+        path += JOINPOINT
+    else:
+        path += SPLIT_ROOTS
+
+    for j in range(len(ent2_to_root)-1,-1 , -1):
+        path += "->" + ent2_to_root[j].dep_
+
+    # print ("sentence: " + ent1[ENT_OBJ_ROOT].doc.text)
+    # print ("ent1: " + ent1[ENT_OBJ_ROOT].text)
+    # print ("ent2: " + ent2[ENT_OBJ_ROOT].text)
+    # print(" path: " + path)
+
+    return path
+
+def get_dependecy_path_pos_str(ent1, ent2):
+    ent1_to_root, ent2_to_root, join_point = get_dependency_path_arr(ent1, ent2)
+    path = ""
+    for w in ent1_to_root:
+        path += w.pos_ + "<-"
+    if join_point != None:
+        path += join_point.pos_
+    else:
+        path += SPLIT_ROOTS
+
+    for j in range(len(ent2_to_root)-1,-1 , -1):
+        path += "->" + ent2_to_root[j].pos_
+    return path
+
+
+def get_dependency_path_arr(ent1, ent2):
     ent1_root = ent1[ENT_OBJ_ROOT]
     ent2_root = ent2[ENT_OBJ_ROOT]
     curr = ent1_root
@@ -77,8 +135,9 @@ def get_dependency_path(ent1, ent2):
     i_from_ent1 = {}
     while curr.dep_ != "ROOT":
         i_from_ent1[curr.i] = len(ent1_to_root)
-        ent1_to_root.append(curr.dep_)
+        ent1_to_root.append(curr)
         curr = curr.head
+    ent1_to_root.append(curr)
 
     ent2_to_root = []
     curr = ent2_root
@@ -87,24 +146,25 @@ def get_dependency_path(ent1, ent2):
         if curr.i in i_from_ent1:
             joining_point_id = curr.i
             break
-        ent2_to_root.append(curr.dep_)
+        ent2_to_root.append(curr)
         curr = curr.head
+    if joining_point_id == -1:
+        ent2_to_root.append(curr)
 
-    path = ""
+    ent1_path = []
+    join_point = None
     if joining_point_id != -1:
         stop = i_from_ent1[joining_point_id]
         for i in range(stop):
-            path +=ent1_to_root[i] + "<-"
-        path += "joinpoint"
+            ent1_path.append(ent1_to_root[i])
+        join_point = ent1_to_root[stop]
     else:
-        for dep in ent1_to_root:
-            path +=dep + "<-"
-        path += "root1|root2"
+        ent1_path = ent1_to_root
 
-    for j in range(len(ent2_to_root)-1,-1 , -1):
-        path += "->" + ent2_to_root[j]
-
-    return path
+    return ent1_path, ent2_to_root, join_point
 
 
-
+def get_dist(ent1, ent2):
+    ent1_i = ent1[ENT_OBJ_ROOT].i
+    ent2_i = ent2[ENT_OBJ_ROOT].i
+    return abs(ent1_i - ent2_i)
