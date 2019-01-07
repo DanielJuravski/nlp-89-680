@@ -10,12 +10,9 @@ ENT_OBJ_SPACY_ENT = "ent_obj_spacy_ent"
 PEOPLE_TITLES = ["mr.", "mrs.", "ms.", "prince", "sir", "sultan", "lord"]
 
 
-#Todo move to clean text
-def get_entity_text(text, root):
+
+def clean_entity_text(text, root):
     ent_text = text.strip()
-    left_edge_word = root.left_edge.text
-    if left_edge_word.lower() in PEOPLE_TITLES:
-        ent_text = left_edge_word + " " + ent_text
 
     text_arr = text.split()
     if text_arr[0].lower() == "the":
@@ -36,11 +33,9 @@ def get_xs_from_sen(sen_id, sen):
     xs = []
     entities = []
     for ent in sen.doc.ents:
-        ent_text = get_entity_text(ent.text, ent.root)
-        ent_obj = {ENT_OBJ_ROOT: ent.root, ENT_OBJ_TEXT: ent_text, ENT_OBJ_LABEL: ent.label_, ENT_OBJ_SPACY_ENT:ent}
+        # ent_text = clean_entity_text(ent.text, ent.root)
+        ent_obj = {ENT_OBJ_ROOT: ent.root, ENT_OBJ_TEXT: ent.text, ENT_OBJ_LABEL: ent.label_, ENT_OBJ_SPACY_ENT:ent}
         entities.append(ent_obj)
-
-
 
     for i, ent_i in enumerate(entities):
         for j, ent_j in enumerate(entities):
@@ -168,3 +163,20 @@ def get_dist(ent1, ent2):
     ent1_i = ent1[ENT_OBJ_ROOT].i
     ent2_i = ent2[ENT_OBJ_ROOT].i
     return abs(ent1_i - ent2_i)
+
+
+def is_descriptive_path(ent1, ent2):
+    descriptive_pos = ["appos", "pobj", "prep", JOINPOINT]
+    arr = get_dependency_path_arr(ent1, ent2)
+    for w in arr:
+        if w not in descriptive_pos:
+            return False
+    return True
+
+
+def modify_entity_text(text, root):
+    ent_text = text.strip()
+    left_edge_word = root.left_edge.text
+    if left_edge_word.lower() in PEOPLE_TITLES:
+        ent_text = left_edge_word + " " + ent_text
+    return ent_text

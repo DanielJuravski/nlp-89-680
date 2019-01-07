@@ -50,5 +50,9 @@ if __name__ == '__main__':
     sen_entities_with_x = sorted(sen_entities_with_x, key=utils.get_senid_int)
     allx = np.array([x[3].toarray()[0] for x in sen_entities_with_x])
     predicted_entities_pairs = clf.predict(allx)
+
+    #add rules here
+
+
     print_results(predicted_entities_pairs, sen_entities_with_x, data, output_file)
 

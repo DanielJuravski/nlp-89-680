@@ -88,8 +88,9 @@ class FeatureExtractor:
         dependency_path_pos_str = parser.get_dependecy_path_pos_str(ent_tuple[1], ent_tuple[2])
         features.append(self.get_feature("dep_pos_path", dependency_path_pos_str))
 
-        #features that decrement f1
-
+        #features that decrement f1 but could be used for rules
+        # features.append(self.get_feature("is_descriptive_path", parser.is_descriptive_path(ent_tuple[1], ent_tuple[2])))
+        #
         # ent1_to_root, ent2_to_root, joinpoint = parser.get_dependency_path_arr(ent_tuple[1], ent_tuple[2])
         # for i, w in enumerate(ent1_to_root):
         #     features.append(self.get_feature("e1_2root_pos_"+str(i), w.pos_))
@@ -97,18 +98,18 @@ class FeatureExtractor:
         #     features.append(self.get_feature("e2_2root_pos_"+str(i), w.pos_))
         # if joinpoint != None:
         #     features.append(self.get_feature("joinpoint_pos", joinpoint.pos_))
-
+        #
         # features.append(self.get_feature("split_roots", parser.is_split_roots(dependency_path_str)))
         # features.append(self.get_feature("ent1_ancestor", parser.is_anccestor(dependency_path_str, 1)))
         # features.append(self.get_feature("ent2_ancestor", parser.is_anccestor(dependency_path_str, 2)))
+        #
 
-
-        e1_clean = self.clean_name(ent1_text)
-        e2_clean = self.clean_name(ent2_text)
+        e1_clean = self.clean_name(ent_tuple[1])
+        e2_clean = self.clean_name(ent_tuple[2])
         return (sen_id, e1_clean, e2_clean, features)
 
     def extract_text(self, ent_obj):
-        return ent_obj[ENT_OBJ_TEXT]
+        return parser.clean_entity_text(ent_obj[ENT_OBJ_TEXT], ent_obj[ENT_OBJ_ROOT])
 
     def extract_type(self, ent_obj):
         return ent_obj[ENT_OBJ_LABEL]
@@ -116,10 +117,6 @@ class FeatureExtractor:
 
     def extract_head(self, ent_obj):
         return ent_obj[ENT_OBJ_ROOT].head.lemma_
-
-
-    def clean_name(self, name):
-        return name
 
     def get_feature(self, feature_prefix, feature_val):
         feature = feature_prefix+str(feature_val)
@@ -132,6 +129,9 @@ class FeatureExtractor:
                 return feature
             else:
                 return feature_prefix + self.unk
+
+    def clean_name(self, ent_obj):
+        return parser.modify_entity_text(ent_obj[ENT_OBJ_TEXT], ent_obj[ENT_OBJ_ROOT])
 
 
 
