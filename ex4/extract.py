@@ -4,18 +4,39 @@ import sys
 import spacy_parser
 import train2
 from feature_extractor import FeatureExtractor
+import rules_extractor
 import numpy as np
 import utils
 from utils import load
+from Lexicon_helper import Lexicon_helper
 
 
-def print_results(pred_ents, sen_entities_with_x,raw_sentences, out_path):
+def print_results(pred_ents_list,data, out_path):
     with open(out_path, "w") as f:
-        for i, p in enumerate(pred_ents):
-            if p == 1:
-                sen_ents_data = sen_entities_with_x[i]
-                sen_id = sen_ents_data[0]
-                f.write("%s\t%s\t%s\t%s\t%s\n" % (sen_id,sen_ents_data[1], spacy_parser.LIVE_IN ,sen_ents_data[2], data[sen_id].text))
+        for pred_ents in pred_ents_list:
+            sen_id = pred_ents[0]
+            f.write("%s\t%s\t%s\t%s\t%s\n" % (sen_id,pred_ents[1], spacy_parser.LIVE_IN ,pred_ents[2], data[sen_id].text))
+
+
+def filter_ent_pairs(predicted_entities_pairs, sen_entities_with_x):
+    pairs=[]
+    for i, p in enumerate(predicted_entities_pairs):
+        if p == 1:
+            tup = (sen_entities_with_x[i][0],sen_entities_with_x[i][1],sen_entities_with_x[i][2])
+            pairs.append(tup)
+    return pairs
+
+
+def merge_lists(extracted_ent_paris_svm, extracted_ents_rules):
+    full_list = set()
+    for rules_ent_pairs in extracted_ents_rules:
+        full_list.add(rules_ent_pairs)
+
+    for ent_pair in extracted_ent_paris_svm:
+        full_list.add(ent_pair)
+    return full_list
+
+
 
 
 if __name__ == '__main__':
@@ -45,14 +66,21 @@ if __name__ == '__main__':
     for sen_id, sen in utils.read_lines(sys.argv[1]):
         data[sen_id] = utils.nlp(sen)
 
-    feature_extractor = FeatureExtractor(feature_hasher, feature_set)
+    lexicon_helper = Lexicon_helper()
+    feature_extractor = FeatureExtractor(lexicon_helper, feature_hasher, feature_set)
     sen_entities_with_x = spacy_parser.get_x_data(feature_extractor, data)
     sen_entities_with_x = sorted(sen_entities_with_x, key=utils.get_senid_int)
     allx = np.array([x[3].toarray()[0] for x in sen_entities_with_x])
     predicted_entities_pairs = clf.predict(allx)
+    extracted_ent_paris_svm = filter_ent_pairs(predicted_entities_pairs, sen_entities_with_x)
 
-    #add rules here
+
+    #add rules herer
+    extracted_ents_rules = rules_extractor.predict(data, lexicon_helper)
+    extracted_ents_rules = sorted(extracted_ents_rules, key=utils.get_senid_int)
+    all_extracted_ents = merge_lists(extracted_ent_paris_svm, extracted_ents_rules)
+
+    print_results(all_extracted_ents, data, output_file)
 
 
-    print_results(predicted_entities_pairs, sen_entities_with_x, data, output_file)
 

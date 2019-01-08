@@ -10,7 +10,7 @@ WORD_FORM_INDEX = 1
 
 
 class FeatureExtractor:
-    def __init__(self, fh=None, fs=None):
+    def __init__(self, lexicon_helper, fh=None, fs=None):
         if fh:
             self.feature_hasher = fh
         if fs:
@@ -19,7 +19,7 @@ class FeatureExtractor:
         else:
             self.features_set = set()
 
-        self.lexicon_helper = Lexicon_helper()
+        self.lexicon_helper = lexicon_helper
 
     features_set = None
     feature_hasher = None
@@ -74,7 +74,7 @@ class FeatureExtractor:
         #word based features
         words_between_ents = parser.get_words_between(ent_tuple[1], ent_tuple[2])
         for word in words_between_ents:
-            features.append(self.get_feature("bow", word))
+            features.append(self.get_feature("bow", word.text))
 
         features.append(self.get_feature("ent1_bword", ent_tuple[1][ENT_OBJ_ROOT].left_edge.text))
         features.append(self.get_feature("ent2_aword", ent_tuple[2][ENT_OBJ_ROOT].right_edge.text))
@@ -89,15 +89,20 @@ class FeatureExtractor:
         features.append(self.get_feature("dep_pos_path", dependency_path_pos_str))
 
         #features that decrement f1 but could be used for rules
-        # features.append(self.get_feature("is_descriptive_path", parser.is_descriptive_path(ent_tuple[1], ent_tuple[2])))
+
+        features.append(self.get_feature("is_descriptive_path", parser.is_descriptive_path(ent_tuple[1], ent_tuple[2])))
         #
-        # ent1_to_root, ent2_to_root, joinpoint = parser.get_dependency_path_arr(ent_tuple[1], ent_tuple[2])
+        #ent1_to_root, ent2_to_root, joinpoint = parser.get_dependency_path_arr(ent_tuple[1], ent_tuple[2])
         # for i, w in enumerate(ent1_to_root):
-        #     features.append(self.get_feature("e1_2root_pos_"+str(i), w.pos_))
+        #     features.append(self.get_feature("e1_2root_pos_"+str(i), w.lemma_))
         # for i, w in enumerate(ent2_to_root):
-        #     features.append(self.get_feature("e2_2root_pos_"+str(i), w.pos_))
+        #     features.append(self.get_feature("e2_2root_pos_"+str(i), w.lemma_))
         # if joinpoint != None:
         #     features.append(self.get_feature("joinpoint_pos", joinpoint.pos_))
+        #
+        # features.append(self.get_feature("len_en1toroot", len(ent1_to_root)))
+        # features.append(self.get_feature("len_en2toroot", len(ent2_to_root)))
+
         #
         # features.append(self.get_feature("split_roots", parser.is_split_roots(dependency_path_str)))
         # features.append(self.get_feature("ent1_ancestor", parser.is_anccestor(dependency_path_str, 1)))

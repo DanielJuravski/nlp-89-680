@@ -2,7 +2,7 @@ import sys
 
 import numpy as np
 from sklearn.svm import LinearSVC
-
+from Lexicon_helper import Lexicon_helper
 import utils
 from feature_extractor import FeatureExtractor
 from spacy_parser import get_x_data, LIVE_IN, ENT_OBJ_TEXT
@@ -82,7 +82,8 @@ if __name__ == '__main__':
         data[sen_id] = utils.nlp(sen)
 
     annotation_sentences = load_annotation_sentences(annotations_file)
-    feature_extractor = FeatureExtractor()
+    lexicon_helper = Lexicon_helper()
+    feature_extractor = FeatureExtractor(lexicon_helper)
     sen_entities_with_x = get_x_data(feature_extractor, data)
     tagged_sen_entites = tag_entities(sen_entities_with_x, annotation_sentences)
     clf = LinearSVC(random_state=0, tol=1e-5)
