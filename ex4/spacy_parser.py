@@ -182,7 +182,7 @@ def get_dist(ent1, ent2):
 
 
 def is_descriptive_path(ent1, ent2):
-    descriptive_dep = ["appos", "pobj", "prep"]
+    descriptive_dep = ["appos", "pobj", "prep", "relcl"]
     ent1_to_root, ent2_to_root, joinpoint = get_dependency_path_arr(ent1, ent2)
     if joinpoint == None:
         return False
