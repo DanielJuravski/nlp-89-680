@@ -196,16 +196,16 @@ def is_descriptive_path(ent1, ent2):
 
     for i in range(1,len(ent2_to_root)):
         w = ent2_to_root[i]
-        if w.ent_type_ == "ORG":
-            return False
+        # if w.ent_type_ == "ORG":
+        #     return False
 
 
     return True
 
 
-def modify_entity_text(text, root):
+def modify_entity_text(text, ent):
     ent_text = text.strip()
-    left_edge_word = root.left_edge.text
+    left_edge_word = ent.doc[ent.start -1].text
     if left_edge_word.lower() in PEOPLE_TITLES:
         ent_text = left_edge_word + " " + ent_text
     return ent_text

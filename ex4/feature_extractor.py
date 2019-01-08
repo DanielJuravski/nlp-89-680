@@ -136,7 +136,7 @@ class FeatureExtractor:
                 return feature_prefix + self.unk
 
     def clean_name(self, ent_obj):
-        return parser.modify_entity_text(ent_obj[ENT_OBJ_TEXT], ent_obj[ENT_OBJ_ROOT])
+        return parser.modify_entity_text(ent_obj[ENT_OBJ_TEXT], ent_obj[ENT_OBJ_SPACY_ENT])
 
 
 
