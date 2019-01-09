@@ -2,11 +2,14 @@ import sys
 
 import numpy as np
 from sklearn.svm import LinearSVC
+
+import rules_extractor
+import utils
 from Lexicon_helper import Lexicon_helper
 import utils
 from feature_extractor import FeatureExtractor
-from spacy_parser import get_x_data, LIVE_IN, ENT_OBJ_TEXT
-from utils import save
+from spacy_parser import get_x_data, LIVE_IN
+from utils import save, filter_ents
 
 GOLD_ENT2 = 2
 GOLD_RELATION = 1
@@ -84,8 +87,15 @@ if __name__ == '__main__':
     annotation_sentences = load_annotation_sentences(annotations_file)
     lexicon_helper = Lexicon_helper()
     feature_extractor = FeatureExtractor(lexicon_helper)
+
+    extracted_ents_rules = rules_extractor.predict(data, lexicon_helper)
+    extracted_ents_rules = sorted(extracted_ents_rules, key=utils.get_senid_int)
+
     sen_entities_with_x = get_x_data(feature_extractor, data)
-    tagged_sen_entites = tag_entities(sen_entities_with_x, annotation_sentences)
+    filtered_sen_entities_with_x = filter_ents(sen_entities_with_x, extracted_ents_rules)
+
+
+    tagged_sen_entites = tag_entities(filtered_sen_entities_with_x, annotation_sentences)
     clf = LinearSVC(random_state=0, tol=1e-5)
     allx = np.array([x[3].toarray()[0] for x in tagged_sen_entites])
     yall = np.array([y[4] for y in tagged_sen_entites])
