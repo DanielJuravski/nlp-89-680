@@ -1,5 +1,5 @@
 import codecs
-
+import spacy_parser
 import pickle
 import spacy
 import sys
@@ -61,3 +61,9 @@ def load(file):
 def save(obj, file_name):
     with open(file_name, "w") as f:
         pickle.dump(obj, f)
+
+
+def filter_duplicate_entities(merged_lists):
+    dict = {(ent_tuple[0], ent_tuple[1][spacy_parser.ENT_OBJ_TEXT], ent_tuple[2][spacy_parser.ENT_OBJ_TEXT]):
+                ent_tuple for ent_tuple in merged_lists}
+    return list(dict.values())

@@ -1,3 +1,5 @@
+from geotext import GeoText
+import spacy_parser
 
 PATH_FOR_FIRST_NAMES_LEXICON = "extra_data/lexicon/firstname.5k"
 
@@ -50,5 +52,22 @@ class Lexicon_helper:
                 return True
         return False
 
-    def is_location(self, entity_text):
-        return entity_text in self.locations_set
+    def valid_norps(self, ent):
+        entity_text = ent[spacy_parser.ENT_OBJ_SPACY_ENT].text
+        valid_norps = ["soviet"]
+        return entity_text.lower() in valid_norps
+
+    def is_location(self, ent):
+        entity_text = ent[spacy_parser.ENT_OBJ_SPACY_ENT].text
+        ent_sentence = ent[spacy_parser.ENT_OBJ_SPACY_ENT].doc.text
+        return (entity_text in self.locations_set or
+                entity_text.lower() in self.get_places(ent_sentence))
+
+    def get_places(self, sentence):
+        places = GeoText(sentence)
+        locations = set()
+        for city in places.cities:
+            locations.add(city.lower())
+        for country in places.countries:
+            locations.add(country.lower())
+        return locations

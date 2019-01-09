@@ -69,7 +69,7 @@ class FeatureExtractor:
         #Lexicon Features
         features.append(self.get_feature("e1_lex_fname", self.lexicon_helper.does_include_first_name(ent1_text)))
         features.append(self.get_feature("e1_lex_lname", self.lexicon_helper.does_include_last_name(ent1_text)))
-        features.append(self.get_feature("e2_lex_loc", self.lexicon_helper.is_location(ent2_text)))
+        features.append(self.get_feature("e2_lex_loc", self.lexicon_helper.is_location(ent_tuple[2])))
 
         #word based features
         words_between_ents = parser.get_words_between(ent_tuple[1], ent_tuple[2])
@@ -90,7 +90,7 @@ class FeatureExtractor:
 
         #features that decrement f1 but could be used for rules
 
-        features.append(self.get_feature("is_descriptive_path", parser.is_descriptive_path(ent_tuple[1], ent_tuple[2])))
+        features.append(self.get_feature("is_descriptive_path", parser.is_direct_ent2_to_ent1_path(ent_tuple[1], ent_tuple[2])))
         #
         #ent1_to_root, ent2_to_root, joinpoint = parser.get_dependency_path_arr(ent_tuple[1], ent_tuple[2])
         # for i, w in enumerate(ent1_to_root):

@@ -119,6 +119,26 @@ def get_dependecy_path_str(ent1, ent2):
 
     return path
 
+def get_dependecy_path_str_with_words(ent1, ent2):
+    ent1_to_root, ent2_to_root, join_point = get_dependency_path_arr(ent1, ent2)
+    path = ""
+    for w in ent1_to_root:
+        path += w.dep_+ "(" +w.text+ "|pos: " + w.pos_+") <-"
+    if join_point != None:
+        path += JOINPOINT + "("+join_point.text+ "|pos: " + join_point.pos_+")"
+    else:
+        path += SPLIT_ROOTS
+
+    for j in range(len(ent2_to_root)-1,-1 , -1):
+        path += "->" + ent2_to_root[j].dep_ + "("+ent2_to_root[j].text+ "|pos: " + ent2_to_root[j].pos_+")"
+
+    # print ("sentence: " + ent1[ENT_OBJ_ROOT].doc.text)
+    # print ("ent1: " + ent1[ENT_OBJ_ROOT].text)
+    # print ("ent2: " + ent2[ENT_OBJ_ROOT].text)
+    # print(" path: " + path)
+
+    return path
+
 def get_dependecy_path_pos_str(ent1, ent2):
     ent1_to_root, ent2_to_root, join_point = get_dependency_path_arr(ent1, ent2)
     path = ""
@@ -144,7 +164,9 @@ def get_dependency_path_arr(ent1, ent2):
         i_from_ent1[curr.i] = len(ent1_to_root)
         ent1_to_root.append(curr)
         curr = curr.head
+    i_from_ent1[curr.i] = len(ent1_to_root)
     ent1_to_root.append(curr)
+
 
     ent2_to_root = []
     curr = ent2_root
@@ -155,6 +177,8 @@ def get_dependency_path_arr(ent1, ent2):
             break
         ent2_to_root.append(curr)
         curr = curr.head
+    if curr.i in i_from_ent1:
+        joining_point_id = curr.i
     if joining_point_id == -1:
         ent2_to_root.append(curr)
 
@@ -180,27 +204,43 @@ def get_dist(ent1, ent2):
         start = ent2[ENT_OBJ_SPACY_ENT].end
     return abs(end - start)
 
+descriptive_dep = ["poss", "appos", "pobj", "prep", "relcl", "attr", "compound"] # no nsubj
 
 def is_descriptive_path(ent1, ent2):
-    descriptive_dep = ["appos", "pobj", "prep", "relcl"]
     ent1_to_root, ent2_to_root, joinpoint = get_dependency_path_arr(ent1, ent2)
     if joinpoint == None:
         return False
 
-    if len(ent1_to_root) > 0:
+    if not (len(ent1_to_root) == 0 or
+                (len(ent1_to_root) == 1 and ent1_to_root[0].dep_ in ["appos", "compound"])):
         return False
 
     for w in ent2_to_root:
         if w.dep_ not in descriptive_dep:
             return False
 
-    for i in range(1,len(ent2_to_root)):
-        w = ent2_to_root[i]
-        # if w.ent_type_ == "ORG":
-        #     return False
-
-
     return True
+
+
+def is_direct_ent2_to_ent1_path(ent1, ent2):
+    ent1_to_root, ent2_to_root, joinpoint = get_dependency_path_arr(ent1, ent2)
+    return joinpoint != None and len(ent1_to_root) == 0
+
+
+def is_be_sentence(ent1, ent2):
+    return False
+    # ent1_to_root, ent2_to_root, joinpoint = get_dependency_path_arr(ent1, ent2)
+    # if joinpoint == None:
+    #     return False
+    #
+    # if joinpoint.lemma_ != "be":
+    #     return False
+    #
+    # for w in ent2_to_root:
+    #     if w.dep_ not in descriptive_dep:
+    #         return False
+    #
+    # return True
 
 
 def modify_entity_text(text, ent):

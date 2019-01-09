@@ -79,6 +79,7 @@ if __name__ == '__main__':
     #Rules extraction
     extracted_ents_rules = rules_extractor.predict(data, lexicon_helper)
     extracted_ents_rules = sorted(extracted_ents_rules, key=utils.get_senid_int)
+
     all_extracted_ents = merge_lists(extracted_ent_paris_svm, extracted_ents_rules)
 
     print_results(all_extracted_ents, data, output_file)

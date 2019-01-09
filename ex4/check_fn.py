@@ -57,9 +57,9 @@ not_found_arr = []
 
 if __name__ == '__main__':
     in_file = "statistics/FN.txt"
-    original_file = "data/Corpus.Dev.txt"
+    original_file = "data/Corpus.TRAIN.txt"
     ent_tuples = extract_ent_tuples(in_file)
-    nlp = spacy.load('en')
+    nlp = spacy.load('en_core_web_lg')
     good = bad = 0
     for sent_id, sent_str in read_lines(original_file):
         if sent_id in ent_tuples:

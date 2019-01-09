@@ -34,23 +34,28 @@ def find_location_in_org(str):
 
 
 def are_valid_ner(ent_tuple):
+
     if (ent_tuple[1][parser.ENT_OBJ_SPACY_ENT].label_ == "PERSON" or ruled_as_person(ent_tuple[1])) and \
-            (ent_tuple[2][parser.ENT_OBJ_SPACY_ENT].label_ == "GPE"):
+            (ent_tuple[2][parser.ENT_OBJ_SPACY_ENT].label_ == "GPE" or
+                     ent_tuple[2][parser.ENT_OBJ_SPACY_ENT].label_ == "LOC" or
+                 # (lexicon_helper.is_location((ent_tuple[2]))) or
+                         ent_tuple[2][parser.ENT_OBJ_SPACY_ENT].label_ == "NORP" and
+                     lexicon_helper.valid_norps((ent_tuple[2]))):
         return True
     return False
 
-def is_close(ent_tuple):
-    id = ent_tuple[0]
-    ent1_to_root, ent2_to_root, joinpoint = parser.get_dependency_path_arr(ent_tuple[1], ent_tuple[2])
-    if parser.get_dist(ent_tuple[1], ent_tuple[2]) < 2 and joinpoint != None:
-        return True
-    if parser.get_dist(ent_tuple[1], ent_tuple[2]) < 6 and joinpoint != None:
-        words_between = parser.get_words_between(ent_tuple[1], ent_tuple[2])
-        for w in words_between:
-            if w.lemma_ in LOCATIONS_ADPOSITION:
-                return True
-
-    return False
+# def is_close(ent_tuple):
+#     id = ent_tuple[0]
+#     ent1_to_root, ent2_to_root, joinpoint = parser.get_dependency_path_arr(ent_tuple[1], ent_tuple[2])
+#     if parser.get_dist(ent_tuple[1], ent_tuple[2]) < 2 and joinpoint != None:
+#         return True
+#     if parser.get_dist(ent_tuple[1], ent_tuple[2]) < 6 and joinpoint != None:
+#         words_between = parser.get_words_between(ent_tuple[1], ent_tuple[2])
+#         for w in words_between:
+#             if w.lemma_ in LOCATIONS_ADPOSITION:
+#                 return True
+#
+#     return False
 
 
 def is_ent1_passive(ent_tuple):
@@ -124,26 +129,41 @@ def worded_as_location(ent):
 
 
 def extract_by_rules(all_ent_couples_objects):
-    filterd_by_ner = []
-    for ent_tuple in all_ent_couples_objects:
-        if are_valid_ner(ent_tuple):
-            filterd_by_ner.append(ent_tuple)
+    passed_rules = all_ent_couples_objects
 
-    filtered_by_words = []
-    for ent_tuple in filterd_by_ner:
-        if valid_by_words(ent_tuple):
-            filtered_by_words.append(ent_tuple)
+    #valid ner
+    passed_rules = filter(lambda t: are_valid_ner(t), passed_rules)
 
-    valid_dates = filtered_by_words
-    # for ent_tuple in filtered_by_words:
-    #     if no_old_date(ent_tuple):
-    #         valid_dates.append(ent_tuple)
 
-    passed_rules = []
-    for ent_tuple in valid_dates:
-        if is_close(ent_tuple) or parser.is_descriptive_path(ent_tuple[1], ent_tuple[2]):
-            if not is_ent1_passive(ent_tuple):
-                passed_rules.append(ent_tuple)
+    for t in passed_rules:
+        path = parser.get_dependecy_path_str_with_words(t[1], t[2])
+        print("sent id: " + t[0])
+        print ("sent is: " + t[1][parser.ENT_OBJ_SPACY_ENT].doc.text)
+        print ("graph is: " + path)
+        pass
+
+    # valid surrounding words
+    # passed_rules = filter(lambda t: valid_by_words(t), passed_rules)
+
+    # #no old dates
+    # passed_rules = filter(lambda t: no_old_date(t), passed_rules)
+
+    # direct_path_sents = filter(lambda t: parser.is_direct_ent2_to_ent1_path(t[1], t[2]), passed_rules)
+
+    direct_path_sents = filter(lambda t: parser.is_descriptive_path(t[1], t[2]), passed_rules)
+
+    # #be sentences and lives sentences
+    be_senentces = filter(lambda t: parser.is_be_sentence(t[1], t[2]), passed_rules)
+
+    #not that good
+    #close_senetences = filter(lambda t: is_close(t), passed_rules)
+
+
+    merged = utils.filter_duplicate_entities( direct_path_sents)
+    passed_rules = merged
+    #
+    # #check to filter only besentences/direct path
+    # passed_rules = [x for x in passed_rules if not is_ent1_passive(x)]
 
 
     return passed_rules
