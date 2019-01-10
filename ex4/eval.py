@@ -140,8 +140,7 @@ if __name__ == '__main__':
         pred_annotation_file = sys.argv[2]
     else:
         gold_annotation_file = 'data/TRAIN.annotations'
-        gold_annotation_file = 'data/DEMO_TRAIN.annotations'
-        pred_annotation_file = 'data/DEMO_PRED.annotations'
+        pred_annotation_file = 'out_1'
 
     gold_annotation_data = get_annotation_data(gold_annotation_file, gold=True)
     pred_annotation_data = get_annotation_data(pred_annotation_file, gold=False)

@@ -1,7 +1,7 @@
-from sklearn.feature_extraction import DictVectorizer, FeatureHasher
+from sklearn.feature_extraction import FeatureHasher
+
 import spacy_parser as parser
 from spacy_parser import ENT_OBJ_SPACY_ENT, ENT_OBJ_LABEL, ENT_OBJ_TEXT, ENT_OBJ_ROOT
-from Lexicon_helper import Lexicon_helper
 
 ROW_ID_INDEX = 0
 HEAD_INDEX = 5
@@ -90,7 +90,9 @@ class FeatureExtractor:
 
 
         features.append(self.get_feature("is_descriptive_path", parser.is_direct_ent2_to_ent1_path(ent_tuple[1], ent_tuple[2])))
+        #
 
+        #
 
         e1_clean = self.clean_name(ent_tuple[1])
         e2_clean = self.clean_name(ent_tuple[2])

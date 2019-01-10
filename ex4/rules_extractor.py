@@ -1,5 +1,9 @@
 import spacy_parser as parser
 import utils
+import nltk
+
+# nltk.download('wordnet')
+# from nltk.corpus import wordnet as wn
 
 LOCATIONS_ADPOSITION = ["of", "to", "in", "from"]
 EXCLUSIVE_LOCATIONS_ADPOSITION = ["in", "from"]
@@ -44,33 +48,20 @@ def are_valid_ner(ent_tuple):
         return True
     return False
 
-# def is_close(ent_tuple):
-#     id = ent_tuple[0]
-#     ent1_to_root, ent2_to_root, joinpoint = parser.get_dependency_path_arr(ent_tuple[1], ent_tuple[2])
-#     if parser.get_dist(ent_tuple[1], ent_tuple[2]) < 2 and joinpoint != None:
-#         return True
-#     if parser.get_dist(ent_tuple[1], ent_tuple[2]) < 6 and joinpoint != None:
-#         words_between = parser.get_words_between(ent_tuple[1], ent_tuple[2])
-#         for w in words_between:
-#             if w.lemma_ in LOCATIONS_ADPOSITION:
+
+# def is_like_kill(ent_tuple):
+#
+#     murder_v = wn.synset('murder.v.01')
+#     murder_n = wn.synset('murder.n.01')
+#     curr = ent_tuple[1][parser.ENT_OBJ_ROOT]
+#     while curr.dep_ != "ROOT":
+#         syns  = wn.synsets(curr.lemma_)
+#         for s in syns:
+#             if s.path_similarity(murder_v) >= 0.5 or s.path_similarity(murder_n) >= 0.5:
 #                 return True
+#         curr = curr.head
 #
 #     return False
-
-
-def is_ent1_passive(ent_tuple):
-    curr = ent_tuple[1][parser.ENT_OBJ_ROOT]
-    length=0
-    while curr.dep_ != "ROOT":
-        if curr.head.pos_ == "VERB":
-            last_dep= curr.dep_
-        curr = curr.head
-        length+=1
-        if curr.pos_ == "VERB":
-            verb = curr
-            if length < 5 and last_dep == "dobj":
-                return True
-    return False
 
 
 def no_old_date(ent_tuple):
@@ -87,20 +78,13 @@ def no_old_date(ent_tuple):
 
     return True
 
+
 def is_number(s):
     try:
         float(s)
         return True
     except ValueError:
         return False
-
-def valid_by_lexicon(ent_tuple):
-    # if not lexicon_helper.is_location(ent_tuple[2][parser.ENT_OBJ_TEXT]):
-    #     return False
-    # name= ent_tuple[1][parser.ENT_OBJ_TEXT]
-    # if not (lexicon_helper.does_include_first_name(name) or lexicon_helper.does_include_last_name(name)):
-    #     return False
-    return True
 
 
 def valid_by_words(ent_tuple):
@@ -109,8 +93,6 @@ def valid_by_words(ent_tuple):
     if word_before_ent1.text.lower() in LOCATIONS_ADPOSITION:
         if word_before_ent1.head.pos_ != "VERB":
             return False
-
-
 
     if worded_as_person(ent_tuple[2]):
         return False
@@ -142,7 +124,7 @@ def extract_by_rules(all_ent_couples_objects):
         print ("graph is: " + path)
         pass
 
-    # valid surrounding words
+    # valid surrounding words - not good
     # passed_rules = filter(lambda t: valid_by_words(t), passed_rules)
 
     # #no old dates
@@ -154,17 +136,12 @@ def extract_by_rules(all_ent_couples_objects):
     # #be sentences and lives sentences
     be_senentces = filter(lambda t: parser.is_be_sentence(t[1], t[2]), passed_rules)
 
-    clean_path = []#filter(lambda t: parser.is_exclusive_path(t[1], t[2]), passed_rules)
 
-    #not that good
-    #close_senetences = filter(lambda t: is_close(t), passed_rules)
-
-
-    merged = utils.filter_duplicate_entities( direct_path_sents + be_senentces + clean_path)
+    merged = utils.filter_duplicate_entities( direct_path_sents + be_senentces )
     passed_rules = merged
-    #
-    # #check to filter only besentences/direct path
-    # passed_rules = [x for x in passed_rules if not is_ent1_passive(x)]
+
+    # filter kills
+    # passed_rules = [x for x in passed_rules if not is_like_kill(x)]
 
 
     return passed_rules
