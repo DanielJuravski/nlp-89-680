@@ -38,7 +38,7 @@ def are_valid_ner(ent_tuple):
     if (ent_tuple[1][parser.ENT_OBJ_SPACY_ENT].label_ == "PERSON" or ruled_as_person(ent_tuple[1])) and \
             (ent_tuple[2][parser.ENT_OBJ_SPACY_ENT].label_ == "GPE" or
                      ent_tuple[2][parser.ENT_OBJ_SPACY_ENT].label_ == "LOC" or
-                 # (lexicon_helper.is_location((ent_tuple[2]))) or
+                 (lexicon_helper.is_location((ent_tuple[2]))) or
                          ent_tuple[2][parser.ENT_OBJ_SPACY_ENT].label_ == "NORP" and
                      lexicon_helper.valid_norps((ent_tuple[2]))):
         return True
@@ -82,7 +82,7 @@ def no_old_date(ent_tuple):
                     date = date[:-2].strip()
                 if date[-1:].lower() == "s":
                     date = date[:-1].strip()
-                if len(date) == 4 and is_number(date) and int(date) < 2000:
+                if len(date) == 4 and is_number(date) and int(date) < 1900:
                     return False
 
     return True
@@ -146,20 +146,21 @@ def extract_by_rules(all_ent_couples_objects):
     # passed_rules = filter(lambda t: valid_by_words(t), passed_rules)
 
     # #no old dates
-    # passed_rules = filter(lambda t: no_old_date(t), passed_rules)
+    passed_rules = filter(lambda t: no_old_date(t), passed_rules)
 
-    # direct_path_sents = filter(lambda t: parser.is_direct_ent2_to_ent1_path(t[1], t[2]), passed_rules)
 
     direct_path_sents = filter(lambda t: parser.is_descriptive_path(t[1], t[2]), passed_rules)
 
     # #be sentences and lives sentences
     be_senentces = filter(lambda t: parser.is_be_sentence(t[1], t[2]), passed_rules)
 
+    clean_path = []#filter(lambda t: parser.is_exclusive_path(t[1], t[2]), passed_rules)
+
     #not that good
     #close_senetences = filter(lambda t: is_close(t), passed_rules)
 
 
-    merged = utils.filter_duplicate_entities( direct_path_sents)
+    merged = utils.filter_duplicate_entities( direct_path_sents + be_senentces + clean_path)
     passed_rules = merged
     #
     # #check to filter only besentences/direct path

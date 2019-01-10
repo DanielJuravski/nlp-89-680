@@ -45,7 +45,7 @@ def get_senid_int(sen_entities):
 def are_similar(gold_val, pred_val):
     if gold_val == pred_val:
         return True
-    elif gold_val[-1] == '.' and gold_val[:-1] == pred_val:
+    elif gold_val[-1] == '.' and gold_val[:-1].strip() == pred_val:
         return True
     elif pred_val[-1] == '.' and pred_val[:-1] == gold_val:
         return True

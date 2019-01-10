@@ -60,7 +60,7 @@ class Lexicon_helper:
     def is_location(self, ent):
         entity_text = ent[spacy_parser.ENT_OBJ_SPACY_ENT].text
         ent_sentence = ent[spacy_parser.ENT_OBJ_SPACY_ENT].doc.text
-        return (entity_text in self.locations_set or
+        return (#entity_text in self.locations_set or
                 entity_text.lower() in self.get_places(ent_sentence))
 
     def get_places(self, sentence):

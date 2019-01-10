@@ -88,26 +88,9 @@ class FeatureExtractor:
         dependency_path_pos_str = parser.get_dependecy_path_pos_str(ent_tuple[1], ent_tuple[2])
         features.append(self.get_feature("dep_pos_path", dependency_path_pos_str))
 
-        #features that decrement f1 but could be used for rules
 
         features.append(self.get_feature("is_descriptive_path", parser.is_direct_ent2_to_ent1_path(ent_tuple[1], ent_tuple[2])))
-        #
-        #ent1_to_root, ent2_to_root, joinpoint = parser.get_dependency_path_arr(ent_tuple[1], ent_tuple[2])
-        # for i, w in enumerate(ent1_to_root):
-        #     features.append(self.get_feature("e1_2root_pos_"+str(i), w.lemma_))
-        # for i, w in enumerate(ent2_to_root):
-        #     features.append(self.get_feature("e2_2root_pos_"+str(i), w.lemma_))
-        # if joinpoint != None:
-        #     features.append(self.get_feature("joinpoint_pos", joinpoint.pos_))
-        #
-        # features.append(self.get_feature("len_en1toroot", len(ent1_to_root)))
-        # features.append(self.get_feature("len_en2toroot", len(ent2_to_root)))
 
-        #
-        # features.append(self.get_feature("split_roots", parser.is_split_roots(dependency_path_str)))
-        # features.append(self.get_feature("ent1_ancestor", parser.is_anccestor(dependency_path_str, 1)))
-        # features.append(self.get_feature("ent2_ancestor", parser.is_anccestor(dependency_path_str, 2)))
-        #
 
         e1_clean = self.clean_name(ent_tuple[1])
         e2_clean = self.clean_name(ent_tuple[2])

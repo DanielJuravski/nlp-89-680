@@ -216,7 +216,7 @@ def is_descriptive_path(ent1, ent2):
         return False
 
     for w in ent2_to_root:
-        if w.dep_ not in descriptive_dep:
+        if w.dep_ not in descriptive_dep or w.ent_type_ == "PERSON":
             return False
 
     return True
@@ -228,19 +228,23 @@ def is_direct_ent2_to_ent1_path(ent1, ent2):
 
 
 def is_be_sentence(ent1, ent2):
-    return False
-    # ent1_to_root, ent2_to_root, joinpoint = get_dependency_path_arr(ent1, ent2)
-    # if joinpoint == None:
-    #     return False
-    #
-    # if joinpoint.lemma_ != "be":
-    #     return False
-    #
-    # for w in ent2_to_root:
-    #     if w.dep_ not in descriptive_dep:
-    #         return False
-    #
-    # return True
+
+    ent1_to_root, ent2_to_root, joinpoint = get_dependency_path_arr(ent1, ent2)
+    if joinpoint == None:
+        return False
+
+    if joinpoint.lemma_ != "be":
+        return False
+
+    if ent1_to_root[0].dep_ != "nsubj" or len(ent1_to_root) > 3 :
+        return False
+
+    for w in ent2_to_root:
+        if w.dep_ not in descriptive_dep:
+            return False
+
+    return True
+
 
 
 def modify_entity_text(text, ent):
@@ -251,4 +255,16 @@ def modify_entity_text(text, ent):
     return ent_text
 
 
+def is_exclusive_path(ent1, ent2):
+    ent1_to_root, ent2_to_root, joinpoint = get_dependency_path_arr(ent1, ent2)
+    if joinpoint == None:
+        return False
 
+    for w in ent2_to_root:
+        if w.ent_type_ == "PERSON":
+            return False
+
+    for w in ent1_to_root:
+        if w.ent_type_ == "PERSON":
+            return False
+    return True
