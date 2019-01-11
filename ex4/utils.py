@@ -73,7 +73,8 @@ def filter_ents(sen_entities_with_x, extracted_ents_rules):
     filtered = []
     for ent_tuple in sen_entities_with_x:
         if (ent_tuple[0],ent_tuple[1], ent_tuple[2]) in found_ents:
-            print("found ent in:" + str(ent_tuple[0]))
+            #print("found ent in:" + str(ent_tuple[0]))
+            pass
         else:
             filtered.append(ent_tuple)
     return filtered

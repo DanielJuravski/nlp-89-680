@@ -101,6 +101,6 @@ if __name__ == '__main__':
     clf.fit(allx, yall)
 
     save(clf, model_file)
-    save(feature_extractor.features_set, "features.pkl")
-    save(feature_extractor.feature_hasher, "features_hasher.pkl")
+    features_obj = (feature_extractor.features_set, feature_extractor.feature_hasher)
+    save(features_obj, "features.pkl")
 

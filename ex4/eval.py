@@ -1,6 +1,8 @@
 import sys
 from collections import defaultdict
 
+import os
+
 import utils
 from utils import are_similar
 
@@ -129,18 +131,16 @@ def write2file(sentences, file_name):
 
 
 def write_stat2file(TP_sents, FP_sents, FN_sents):
+    if not os.path.exists("statistics"):
+        os.makedirs("statistics")
     write2file(TP_sents, 'statistics/TP.txt')
     write2file(FP_sents, 'statistics/FP.txt')
     write2file(FN_sents, 'statistics/FN.txt')
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 2:
-        gold_annotation_file = sys.argv[1]
-        pred_annotation_file = sys.argv[2]
-    else:
-        gold_annotation_file = 'data/TRAIN.annotations'
-        pred_annotation_file = 'out_1'
+    gold_annotation_file = sys.argv[1]
+    pred_annotation_file = sys.argv[2]
 
     gold_annotation_data = get_annotation_data(gold_annotation_file, gold=True)
     pred_annotation_data = get_annotation_data(pred_annotation_file, gold=False)

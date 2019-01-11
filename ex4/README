@@ -4,10 +4,13 @@ python version 2.7
 required packages:
 
 spacy
+pip install -U spacy
 
 sklearn
+pip install -U scikit-learn
 
 GeoText
+pip install geotext
 
 numpy
 (should be present)
@@ -16,16 +19,40 @@ numpy
 ***Extract Script***
 The script takes as input the .txt unproccessed file
 
-python extract.py <Input File> <Output File> [--model <Model file> (optional)] [--features <Feature File> (optional)] [--feature_hasher <Feature Hasher file> (optional)]
+Run:
+    python extract.py <Input File> <Output File> [--model <Model file> (optional)] [--features <Feature File> (optional)]
 
-Model File:
-If not given assumes file is at ./model.pkl
+Parameters:
+    Model File:
+    If not given assumes file is at ./model.pkl
 
-Features
+    Features
+    If not given assumes file is at ./features.pkl
 
+
+Output:
+    creates the <Output File> with all relations found in <Input File>
 
 ***Eval Script***
 
+Run:
+    python eval.py <Gold Annotations File> <Outputted File to evaluate>
+
+Output:
+    - Writes to console (standard output) the Precision, Recall and F1 values
+
+    - Creates a directory ./statistics with the predictions separated in files fo FN, FP, TP
 
 ***Training Script***
 
+Run:
+    python train.py <Input File> <Annotations File>
+
+Parameters:
+    <Input File> should be the raw .txt training file
+    <Annotations File> should be its correlating annotations
+
+Output:
+    Writes to running directory the following files to be used with the extract.py script:
+    ./model.pkl
+    ./features.pkl

@@ -42,7 +42,6 @@ def merge_lists(extracted_ent_paris_svm, extracted_ents_rules):
 if __name__ == '__main__':
     model_file = "model.pkl"
     features_file = "features.pkl"
-    features_hasher_file = "features_hasher.pkl"
 
     input_file = sys.argv[1]
     output_file = sys.argv[2]
@@ -52,13 +51,10 @@ if __name__ == '__main__':
     if "--features" in sys.argv:
         features_arg = sys.argv.index("--features")
         features_file = sys.argv[features_arg+1]
-    if "--feature_hasher" in sys.argv:
-        feature_hasher_arg = sys.argv.index("--feature_hasher")
-        features_hasher_file = sys.argv[feature_hasher_arg+1]
 
     clf = load(model_file)
-    feature_set = load(features_file)
-    feature_hasher = load(features_hasher_file)
+    features_obj = load(features_file)
+    feature_set, feature_hasher = features_obj
     if train.check_file(input_file):
         print "file is in wrong format. expected raw and not proccessed file"
 
