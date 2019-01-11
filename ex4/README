@@ -1,0 +1,31 @@
+python version 2.7
+
+==============================
+required packages:
+
+spacy
+
+sklearn
+
+GeoText
+
+numpy
+(should be present)
+===============================
+
+***Extract Script***
+The script takes as input the .txt unproccessed file
+
+python extract.py <Input File> <Output File> [--model <Model file> (optional)] [--features <Feature File> (optional)] [--feature_hasher <Feature Hasher file> (optional)]
+
+Model File:
+If not given assumes file is at ./model.pkl
+
+Features
+
+
+***Eval Script***
+
+
+***Training Script***
+

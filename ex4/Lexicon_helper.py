@@ -1,4 +1,5 @@
 from geotext import GeoText
+
 import spacy_parser
 
 PATH_FOR_FIRST_NAMES_LEXICON = "extra_data/lexicon/firstname.5k"

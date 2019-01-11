@@ -1,7 +1,7 @@
 import codecs
+from collections import defaultdict
 
 import spacy
-from collections import defaultdict
 
 PEOPLE_TITLES = ["mr.", "mrs.", "ms.", "prince", "sir", "sultan", "lord"]
 

@@ -1,6 +1,5 @@
 import spacy_parser as parser
 import utils
-import nltk
 
 # nltk.download('wordnet')
 # from nltk.corpus import wordnet as wn
@@ -9,8 +8,7 @@ LOCATIONS_ADPOSITION = ["of", "to", "in", "from"]
 EXCLUSIVE_LOCATIONS_ADPOSITION = ["in", "from"]
 
 def ruled_as_person(ent):
-    return worded_as_person(ent) and (lexicon_helper.does_include_first_name(ent[parser.ENT_OBJ_TEXT]) or
-                                      lexicon_helper.does_include_last_name(ent[parser.ENT_OBJ_TEXT]))
+    return worded_as_person(ent)
 
 def get_all_subsets_strs(main_str):
     arr = main_str.split()
@@ -117,12 +115,12 @@ def extract_by_rules(all_ent_couples_objects):
     passed_rules = filter(lambda t: are_valid_ner(t), passed_rules)
 
 
-    for t in passed_rules:
-        path = parser.get_dependecy_path_str_with_words(t[1], t[2])
-        print("sent id: " + t[0])
-        print ("sent is: " + t[1][parser.ENT_OBJ_SPACY_ENT].doc.text)
-        print ("graph is: " + path)
-        pass
+    # for t in passed_rules:
+    #     path = parser.get_dependecy_path_str_with_words(t[1], t[2])
+    #     print("sent id: " + t[0])
+    #     print ("sent is: " + t[1][parser.ENT_OBJ_SPACY_ENT].doc.text)
+    #     print ("graph is: " + path)
+    #     pass
 
     # valid surrounding words - not good
     # passed_rules = filter(lambda t: valid_by_words(t), passed_rules)

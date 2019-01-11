@@ -1,8 +1,7 @@
-import codecs 
-import spacy 
+import codecs
 import sys
 
-import spacy_parser
+import spacy
 
 nlp = spacy.load('en_core_web_lg')
 
@@ -15,10 +14,6 @@ def read_lines(fname):
 
 i_count = 0
 for sent_id, sent_str in read_lines(sys.argv[1]):
-    # if i_count > 20:
-    #     break
-    # else:
-    #     i_count +=1
 
     sent = nlp(sent_str)
     print "#id:",sent_id

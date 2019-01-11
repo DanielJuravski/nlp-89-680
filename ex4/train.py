@@ -6,7 +6,6 @@ from sklearn.svm import LinearSVC
 import rules_extractor
 import utils
 from Lexicon_helper import Lexicon_helper
-import utils
 from feature_extractor import FeatureExtractor
 from spacy_parser import get_x_data, LIVE_IN
 from utils import save, filter_ents

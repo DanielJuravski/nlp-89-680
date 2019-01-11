@@ -1,9 +1,9 @@
 import codecs
-import spacy_parser
 import pickle
-import spacy
-import sys
 
+import spacy
+
+import spacy_parser
 
 SENT_PREFIX="sent"
 

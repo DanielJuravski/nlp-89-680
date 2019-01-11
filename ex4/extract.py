@@ -1,14 +1,14 @@
-import pickle
 import sys
 
-import spacy_parser
-import train2
-from feature_extractor import FeatureExtractor
-import rules_extractor
 import numpy as np
+
+import rules_extractor
+import spacy_parser
+import train
 import utils
-from utils import load
 from Lexicon_helper import Lexicon_helper
+from feature_extractor import FeatureExtractor
+from utils import load
 
 
 def print_results(pred_ents_list,data, out_path):
@@ -59,7 +59,7 @@ if __name__ == '__main__':
     clf = load(model_file)
     feature_set = load(features_file)
     feature_hasher = load(features_hasher_file)
-    if train2.check_file(input_file):
+    if train.check_file(input_file):
         print "file is in wrong format. expected raw and not proccessed file"
 
     data = {}
